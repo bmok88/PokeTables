@@ -2,5 +2,15 @@
   "name": "poke-tables",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "path": "^0.12.7",
+    "webpack": "^3.5.3",
+    "webpack-dev-server": "^2.7.1"
+  }
 }
