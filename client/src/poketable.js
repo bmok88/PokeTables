@@ -1311,7 +1311,6 @@ var pokemonData = [{
   }
 ];
 
-
 const addRow = (pokemon) => {
   //for non-API pokemon dataset
   for (var i = 0; i < pokemon.length; i++) {
@@ -1333,4 +1332,22 @@ const addRow = (pokemon) => {
 }
 
 addRow(pokemonData)
+
+const sortTable = (column) => {
+  const sortedPokemonData = pokemonData.sort((a, b) => {
+    if (a[column] < b[column]) {
+      return -1;
+    }
+    if (a[column] > b[column]) {
+      return 1;
+    }
+
+    return 0;
+  });
+
+  return sortedPokemonData;
+}
+
+
+console.log(sortTable('types'));
 // getAllPokemon();
