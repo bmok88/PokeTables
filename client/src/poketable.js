@@ -1331,23 +1331,33 @@ const addRow = (pokemon) => {
   console.log(tableBody);
 }
 
+const clearTable = () => {
+  while (tableBody.hasChildNodes()) {
+    tableBody.removeChild(tableBody.firstChild);
+  }
+}
+
 addRow(pokemonData)
 
+//sort the pokemon dataset based off column name
 const sortTable = (column) => {
   const sortedPokemonData = pokemonData.sort((a, b) => {
-    if (a[column] < b[column]) {
-      return -1;
-    }
-    if (a[column] > b[column]) {
-      return 1;
-    }
-
-    return 0;
+    return a[column] < b[column] ? -1 : a[column] > b[column] ? 1 : 0;
   });
 
   return sortedPokemonData;
 }
 
+const sortIcons = document.getElementsByClassName('sort');
 
-console.log(sortTable('types'));
+const elements = [...sortIcons];
+
+elements.forEach(el => {
+  el.addEventListener('click', e => {
+    const columnToSort = el.classList[1];
+    const sortedPokemonData = sortTable(columnToSort);
+    clearTable();
+    addRow(sortedPokemonData);
+  });
+});
 // getAllPokemon();
