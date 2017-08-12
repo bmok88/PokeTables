@@ -4,42 +4,42 @@ const tableBody = document.getElementById('pokebody');
 
 //Get request that returns array of all 150 pokemon url's
 
-const getAllPokemon = () => {
-  const request = new XMLHttpRequest();
-  request.open('GET', pokeAPI );
-  request.send(null);
-  request.onreadystatechange = function() {
-    const DONE = 4;
-    const OK = 200;
+// const getAllPokemon = () => {
+//   const request = new XMLHttpRequest();
+//   request.open('GET', pokeAPI );
+//   request.send(null);
+//   request.onreadystatechange = function() {
+//     const DONE = 4;
+//     const OK = 200;
 
-    if (request.readyState !== 4 || request.status !== 200) {
-      return 'Error:' + request.status;
-    }
+//     if (request.readyState !== 4 || request.status !== 200) {
+//       return 'Error:' + request.status;
+//     }
 
-    console.log(JSON.parse(request.responseText).results);
-    const pokeData = JSON.parse(request.responseText).results;
-    for (var i = 0; i < pokeData.length; i++) {
-      getOnePokemon(pokeData[i].url);
-    }
-  }
-}
+//     console.log(JSON.parse(request.responseText).results);
+//     const pokeData = JSON.parse(request.responseText).results;
+//     for (var i = 0; i < pokeData.length; i++) {
+//       getOnePokemon(pokeData[i].url);
+//     }
+//   }
+// }
 
 //Get request for each individual pokemon
-const getOnePokemon = (url) => {
-  const request = new XMLHttpRequest();
-  request.open('GET', url);
-  request.send(null);
-  request.onreadystatechange = function() {
-    const DONE = 4;
-    const OK = 200;
+// const getOnePokemon = (url) => {
+//   const request = new XMLHttpRequest();
+//   request.open('GET', url);
+//   request.send(null);
+//   request.onreadystatechange = function() {
+//     const DONE = 4;
+//     const OK = 200;
 
-    if (request.readyState !== 4 || request.status !== 200) {
-      return 'Error:' + request.status;
-    }
-    const pokemon = JSON.parse(request.responseText);
-    addRow(pokemon);
-  }
-}
+//     if (request.readyState !== 4 || request.status !== 200) {
+//       return 'Error:' + request.status;
+//     }
+//     const pokemon = JSON.parse(request.responseText);
+//     addRow(pokemon);
+//   }
+// }
 
 var pokemonData = [{
   "number": 1,
@@ -1314,7 +1314,7 @@ var pokemonData = [{
 ];
 
 const addSortButtons = () => {
-  const sortButton = new Image(10, 10);
+  const sortButton = new Image(12, 12);
   sortButton.classList.add('sort');
   sortButton.src = sortButtonUrl;
   const sortButton2 = sortButton.cloneNode();
@@ -1334,23 +1334,24 @@ const addSortButtons = () => {
 }
 
 addSortButtons();
-const addRow = (pokemon) => {
-  //for non-API pokemon dataset
-  for (var i = 0; i < 15; i++) {
+
+const addRows = (pokemonData, firstRowOfPage, lastRowOfPage) => {
+  //for non-API data set
+  for (var i = firstRowOfPage; i < lastRowOfPage; i++) {
     const newRow = document.createElement('tr');
     const nameCol = document.createElement('td');
     const numCol = document.createElement('td');
     const typeCol = document.createElement('td');
     const imgCol = document.createElement('td');
-    const img = new Image(100, 100);
-    img.src = pokemon[i].imageUrl;
+    const img = new Image(80, 80);
+    img.src = pokemonData[i].imageUrl;
     imgCol.appendChild(img);
-    newRow.appendChild(nameCol).innerHTML = pokemon[i].name;
-    newRow.appendChild(numCol).innerHTML = pokemon[i].number;
-    if (pokemon[i].types.length > 1) {
-      newRow.appendChild(typeCol).innerHTML = pokemon[i].types[0] + '/' + pokemon[i].types[1];
+    newRow.appendChild(nameCol).innerHTML = pokemonData[i].name;
+    newRow.appendChild(numCol).innerHTML = pokemonData[i].number;
+    if (pokemonData[i].types.length > 1) {
+      newRow.appendChild(typeCol).innerHTML = pokemonData[i].types[0] + '/' + pokemonData[i].types[1];
     } else {
-      newRow.appendChild(typeCol).innerHTML = pokemon[i].types;
+      newRow.appendChild(typeCol).innerHTML = pokemonData[i].types;
     }
     newRow.appendChild(imgCol);
     tableBody.appendChild(newRow);
@@ -1358,13 +1359,36 @@ const addRow = (pokemon) => {
   console.log(tableBody);
 }
 
+const choosePage = (page) => {
+  const pageToRows = {
+    1: 1,
+    2: 11,
+    3: 21,
+    4: 31,
+    5: 41,
+    6: 51,
+    7: 61,
+    8: 71,
+    9: 81,
+    10: 91,
+    11: 101,
+    12: 111,
+    13: 121,
+    14: 131,
+    15: 141
+  };
+  const firstRowOfPage = pageToRows[page];
+  const lastRowOfPage = firstRowOfPage + 9;
+  addRows(firstRowOfPage, lastRowOfPage);
+};
+
 const clearTable = () => {
   while (tableBody.hasChildNodes()) {
     tableBody.removeChild(tableBody.firstChild);
   }
 }
 
-addRow(pokemonData)
+addRows(pokemonData, 1, 10);
 
 //sort the pokemon dataset based off column name
 const sortTable = (column) => {
@@ -1393,7 +1417,7 @@ elements.forEach(el => {
     } else {
       el.classList.add('sorted');
     }
-    addRow(sortedPokemonData);
+    addRows(sortedPokemonData, 1, 10);
   });
 });
 
