@@ -1,7 +1,9 @@
 const pokeAPI = 'http://pokeapi.co/api/v2/pokemon/';
+const sortButtonUrl = "https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg";
 const tableBody = document.getElementById('pokebody');
 
 //Get request that returns array of all 150 pokemon url's
+
 const getAllPokemon = () => {
   const request = new XMLHttpRequest();
   request.open('GET', pokeAPI );
@@ -1311,9 +1313,30 @@ var pokemonData = [{
   }
 ];
 
+const addSortButtons = () => {
+  const sortButton = new Image(10, 10);
+  sortButton.classList.add('sort');
+  sortButton.src = sortButtonUrl;
+  const sortButton2 = sortButton.cloneNode();
+  const sortButton3 = sortButton.cloneNode();
+  sortButton.classList.add('name');
+  sortButton2.classList.add('number');
+  sortButton3.classList.add('type');
+
+  const nameHeader = document.getElementById('name');
+  const numberHeader = document.getElementById('number');
+  const typeHeader = document.getElementById('type');
+  nameHeader.appendChild(sortButton);
+
+  numberHeader.appendChild(sortButton2);
+
+  typeHeader.appendChild(sortButton3);
+}
+
+addSortButtons();
 const addRow = (pokemon) => {
   //for non-API pokemon dataset
-  for (var i = 0; i < pokemon.length; i++) {
+  for (var i = 0; i < 15; i++) {
     const newRow = document.createElement('tr');
     const nameCol = document.createElement('td');
     const numCol = document.createElement('td');
@@ -1324,7 +1347,11 @@ const addRow = (pokemon) => {
     imgCol.appendChild(img);
     newRow.appendChild(nameCol).innerHTML = pokemon[i].name;
     newRow.appendChild(numCol).innerHTML = pokemon[i].number;
-    newRow.appendChild(typeCol).innerHTML = pokemon[i].types;
+    if (pokemon[i].types.length > 1) {
+      newRow.appendChild(typeCol).innerHTML = pokemon[i].types[0] + '/' + pokemon[i].types[1];
+    } else {
+      newRow.appendChild(typeCol).innerHTML = pokemon[i].types;
+    }
     newRow.appendChild(imgCol);
     tableBody.appendChild(newRow);
   }
@@ -1369,4 +1396,6 @@ elements.forEach(el => {
     addRow(sortedPokemonData);
   });
 });
+
+
 // getAllPokemon();
