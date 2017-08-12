@@ -1335,9 +1335,14 @@ const addSortButtons = () => {
 
 addSortButtons();
 
-const addRows = (pokemonData, firstRowOfPage, lastRowOfPage) => {
+let currentPage = 1;
+
+const addRows = (page) => {
   //for non-API data set
-  for (var i = firstRowOfPage; i < lastRowOfPage; i++) {
+  clearTable();
+  const firstRowOfPage = choosePage(currentPage);
+  console.log(firstRowOfPage)
+  for (var i = firstRowOfPage; i <= firstRowOfPage + 9; i++) {
     const newRow = document.createElement('tr');
     const nameCol = document.createElement('td');
     const numCol = document.createElement('td');
@@ -1360,27 +1365,42 @@ const addRows = (pokemonData, firstRowOfPage, lastRowOfPage) => {
 }
 
 const choosePage = (page) => {
+  console.log('page inside choosePage', page)
   const pageToRows = {
-    1: 1,
-    2: 11,
-    3: 21,
-    4: 31,
-    5: 41,
-    6: 51,
-    7: 61,
-    8: 71,
-    9: 81,
-    10: 91,
-    11: 101,
-    12: 111,
-    13: 121,
-    14: 131,
-    15: 141
+    1: 0,
+    2: 10,
+    3: 20,
+    4: 30,
+    5: 40,
+    6: 50,
+    7: 60,
+    8: 70,
+    9: 80,
+    10: 90,
+    11: 100,
+    12: 110,
+    13: 120,
+    14: 130,
+    15: 140
   };
   const firstRowOfPage = pageToRows[page];
-  const lastRowOfPage = firstRowOfPage + 9;
-  addRows(firstRowOfPage, lastRowOfPage);
+
+  return firstRowOfPage;
 };
+
+
+
+const pageButtonElements = document.getElementsByClassName('paginate_button');
+const pageButtons = [...pageButtonElements];
+pageButtons.forEach(button => {
+  button.addEventListener('click', e => {
+    const page = e.target.innerHTML;
+    currentPage = page;
+    console.log('current page', page)
+    addRows(page);
+  });
+});
+
 
 const clearTable = () => {
   while (tableBody.hasChildNodes()) {
@@ -1388,7 +1408,7 @@ const clearTable = () => {
   }
 }
 
-addRows(pokemonData, 1, 10);
+addRows(pokemonData, 0, 9);
 
 //sort the pokemon dataset based off column name
 const sortTable = (column) => {
@@ -1417,7 +1437,8 @@ elements.forEach(el => {
     } else {
       el.classList.add('sorted');
     }
-    addRows(sortedPokemonData, 1, 10);
+    console.log('current page inside sort', currentPage)
+    addRows(currentPage);
   });
 });
 
