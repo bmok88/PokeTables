@@ -1346,7 +1346,7 @@ const sortTable = (column) => {
   });
 
   return sortedPokemonData;
-}
+};
 
 const sortIcons = document.getElementsByClassName('sort');
 
@@ -1355,8 +1355,17 @@ const elements = [...sortIcons];
 elements.forEach(el => {
   el.addEventListener('click', e => {
     const columnToSort = el.classList[1];
-    const sortedPokemonData = sortTable(columnToSort);
+    let sortedPokemonData = sortTable(columnToSort);
     clearTable();
+    console.log('clicked', el.classList)
+
+    if (el.classList.contains('sorted')) {
+      sortedPokemonData = sortedPokemonData.reverse();
+      el.classList.remove('sorted');
+      console.log('after sorted', el.classList)
+    } else {
+      el.classList.add('sorted');
+    }
     addRow(sortedPokemonData);
   });
 });
