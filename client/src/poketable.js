@@ -1348,8 +1348,11 @@ const addRows = (page) => {
     const nameCol = document.createElement('td');
     nameCol.classList.add('name_column');
     const numCol = document.createElement('td');
+    numCol.classList.add('num_column');
     const typeCol = document.createElement('td');
+    typeCol.classList.add('type_column');
     const imgCol = document.createElement('td');
+    imgCol.classList.add('image_column');
     const img = new Image(80, 80);
     img.src = pokemonData[i].imageUrl;
     imgCol.appendChild(img);
@@ -1514,25 +1517,44 @@ const columnHeaders = document.getElementsByClassName('column_header');
 const toggleButtons = [...toggleElements];
 toggleButtons.forEach(toggle => {
   toggle.addEventListener('click', e => {
+    const columnName = toggle.innerHTML;
     for (var i = 0; i < columnHeaders.length; i++) {
-      if (toggle.innerHTML === columnHeaders[i].innerText) {
+      if (columnName === columnHeaders[i].innerText) {
         const nameColumn = document.getElementsByClassName('name_column');
-
-        // [...nameColumn].forEach(name => {
-        //   console.log(name)
-        //   name.classList.add('toggle');
-        // })
-        // columnHeaders[i].classList.add('toggle');
         const rows = document.getElementsByTagName('tr');
 
-        console.log(rows, 'rows')
         columnHeaders[i].remove();
         for (var i = 0; i < rows.length; i++) {
-          rows[i].removeChild(rows[i].firstChild);
+          if (columnName === 'Name') {
+            console.log('child rows', rows[i].childNodes)
+            rows[i].childNodes.forEach(child => {
+              if (child.className === 'name_column') {
+                child.remove();
+              }
+            });
+          } else if (columnName === 'Number') {
+            rows[i].childNodes.forEach(child => {
+              if (child.className === 'num_column') {
+                child.remove();
+              }
+            });
+          } else if (columnName === 'Type(s)') {
+            rows[i].childNodes.forEach(child => {
+              if (child.className === 'type_column') {
+                child.remove();
+              }
+            });
+          } else if (columnName === 'Image') {
+            rows[i].childNodes.forEach(child => {
+              if (child.className === 'image_column') {
+                child.remove();
+              }
+            });
+          }
         }
       }
     }
-  })
-})
+  });
+});
 
 // getAllPokemon();
