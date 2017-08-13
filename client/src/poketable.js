@@ -1335,7 +1335,7 @@ const addSortButtons = () => {
 
 addSortButtons();
 
-let currentPage = 1;
+
 
 const addRows = (page) => {
   //for non-API data set
@@ -1388,11 +1388,18 @@ const choosePage = (page) => {
   return firstRowOfPage;
 };
 
+let currentPage = 1;
+    console.log(currentPage, 'on page load')
 const pageButtonElements = document.getElementsByClassName('paginate_button');
 const pageButtons = [...pageButtonElements];
 pageButtons.forEach(button => {
   button.addEventListener('click', e => {
     const page = e.target.innerHTML;
+    console.log(button)
+    pageButtons.forEach(btn => {
+      btn.classList.remove('button-border');
+    });
+
     if (page === 'Next') {
       if (currentPage < 15) {
         currentPage++;
@@ -1407,6 +1414,12 @@ pageButtons.forEach(button => {
         pageButtons[5].innerHTML = parseInt(pageButtons[5].innerHTML) + 1;
         pageButtons[6].innerHTML = parseInt(pageButtons[6].innerHTML) + 1;
       }
+
+      pageButtons.forEach(button => {
+        if (parseInt(button.innerHTML) === currentPage) {
+          button.classList.add('button-border');
+        }
+      });
     } else if (page === 'Last') {
       currentPage = 15;
       //Updates the page bar to show current range of pages on last click
@@ -1415,6 +1428,7 @@ pageButtons.forEach(button => {
       pageButtons[4].innerHTML = currentPage - 2;
       pageButtons[5].innerHTML = currentPage - 1;
       pageButtons[6].innerHTML = currentPage;
+      pageButtons[6].classList.add('button-border');
     } else if (page === 'Previous') {
       if (currentPage > 1) {
         currentPage--;
@@ -1429,6 +1443,11 @@ pageButtons.forEach(button => {
         pageButtons[5].innerHTML = parseInt(pageButtons[5].innerHTML) - 1;
         pageButtons[6].innerHTML = parseInt(pageButtons[6].innerHTML) - 1;
       }
+      pageButtons.forEach(button => {
+        if (parseInt(button.innerHTML) === currentPage) {
+          button.classList.add('button-border');
+        }
+      });
     } else if (page === 'First') {
       //Updates the page bar to show current range of pages on first click
       currentPage = 1;
@@ -1437,8 +1456,10 @@ pageButtons.forEach(button => {
       pageButtons[4].innerHTML = currentPage + 2;
       pageButtons[5].innerHTML = currentPage + 3;
       pageButtons[6].innerHTML = currentPage + 4;
+      pageButtons[2].classList.add('button-border');
     } else {
       currentPage = page;
+      button.classList.add('button-border');
     }
 
     addRows(page);

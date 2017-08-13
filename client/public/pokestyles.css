@@ -9,3 +9,7 @@ th {
 td {
   text-align: center;
 }
+
+a.button-border {
+  font-weight: bold;
+}
