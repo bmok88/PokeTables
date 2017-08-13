@@ -1326,6 +1326,7 @@ const addSortButtons = () => {
   const nameHeader = document.getElementById('name');
   const numberHeader = document.getElementById('number');
   const typeHeader = document.getElementById('type');
+
   nameHeader.appendChild(sortButton);
 
   numberHeader.appendChild(sortButton2);
@@ -1345,6 +1346,7 @@ const addRows = (page) => {
   for (var i = firstRowOfPage; i <= firstRowOfPage + 9; i++) {
     const newRow = document.createElement('tr');
     const nameCol = document.createElement('td');
+    nameCol.classList.add('name_column');
     const numCol = document.createElement('td');
     const typeCol = document.createElement('td');
     const imgCol = document.createElement('td');
@@ -1362,7 +1364,7 @@ const addRows = (page) => {
     tableBody.appendChild(newRow);
   }
   console.log(tableBody);
-}
+};
 
 const choosePage = (page) => {
   console.log('page inside choosePage', page)
@@ -1507,7 +1509,30 @@ elements.forEach(el => {
   });
 });
 
+const toggleElements = document.getElementsByClassName('toggle_button');
+const columnHeaders = document.getElementsByClassName('column_header');
+const toggleButtons = [...toggleElements];
+toggleButtons.forEach(toggle => {
+  toggle.addEventListener('click', e => {
+    for (var i = 0; i < columnHeaders.length; i++) {
+      if (toggle.innerHTML === columnHeaders[i].innerText) {
+        const nameColumn = document.getElementsByClassName('name_column');
 
+        // [...nameColumn].forEach(name => {
+        //   console.log(name)
+        //   name.classList.add('toggle');
+        // })
+        // columnHeaders[i].classList.add('toggle');
+        const rows = document.getElementsByTagName('tr');
 
+        console.log(rows, 'rows')
+        columnHeaders[i].remove();
+        for (var i = 0; i < rows.length; i++) {
+          rows[i].removeChild(rows[i].firstChild);
+        }
+      }
+    }
+  })
+})
 
 // getAllPokemon();

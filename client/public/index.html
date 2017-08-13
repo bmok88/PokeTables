@@ -6,13 +6,19 @@
   <link href="pokestyles.css" rel="stylesheet">
 </head>
 <body>
+  <div>Toggle column:
+    <a class="toggle_button">Name</a>
+    <a class="toggle_button">Number</a>
+    <a class="toggle_button">Type(s)</a>
+    <a class="toggle_button">Image</a>
+  </div>
   <table>
     <thead>
       <tr>
-        <th id="name">Name</th>
-        <th id="number">Number</th>
-        <th id="type">Type(s)</th>
-        <th id="image">Image</th>
+        <th id="name" class="column_header">Name</th>
+        <th id="number" class="column_header">Number</th>
+        <th id="type" class="column_header">Type(s)</th>
+        <th id="image" class="column_header">Image</th>
       </tr>
     </thead>
     <tbody id="pokebody">

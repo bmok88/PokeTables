@@ -2,8 +2,17 @@ table, th, td {
   border: 2px solid;
 }
 
+table {
+  width: 100%;
+}
+
+#pages {
+  float: right;
+}
+
 th {
   padding: 0px 5px;
+  width: 25%;
 }
 
 td {
@@ -12,4 +21,12 @@ td {
 
 a.button-border {
   font-weight: bold;
+}
+
+a {
+  text-decoration: none;
+}
+
+th.toggle, td.toggle {
+  visibility: hidden;
 }
