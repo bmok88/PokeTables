@@ -1355,6 +1355,7 @@ const addRows = (page) => {
     imgCol.classList.add('image_column');
     const img = new Image(70, 70);
     const taskCol = document.createElement('td');
+    taskCol.classList.add('action_column');
     const editImg = new Image(20, 20);
     editImg.src = 'https://www.iconexperience.com/_img/i_collection_png/256x256/plain/pencil.png';
     editImg.classList.add('action');
@@ -1409,7 +1410,6 @@ const choosePage = (page) => {
 };
 
 let currentPage = 1;
-    console.log(currentPage, 'on page load')
 const pageButtonElements = document.getElementsByClassName('paginate_button');
 const pageButtons = [...pageButtonElements];
 pageButtons.forEach(button => {
@@ -1529,6 +1529,7 @@ elements.forEach(el => {
 
 const toggleElements = document.getElementsByClassName('toggle_button');
 const columnHeaders = document.getElementsByClassName('column_header');
+console.log(columnHeaders, 'line 1531')
 const toggleButtons = [...toggleElements];
 toggleButtons.forEach(toggle => {
   toggle.addEventListener('click', e => {
@@ -1550,19 +1551,25 @@ toggleButtons.forEach(toggle => {
             });
           } else if (columnName === 'Number') {
             rows[i].childNodes.forEach(child => {
-              if (child.className === 'num_column') {
+              if (child.className === 'number_column') {
                 child.remove();
               }
             });
           } else if (columnName === 'Type(s)') {
             rows[i].childNodes.forEach(child => {
-              if (child.className === 'type_column') {
+              if (child.className === 'types_column') {
                 child.remove();
               }
             });
           } else if (columnName === 'Image') {
             rows[i].childNodes.forEach(child => {
               if (child.className === 'image_column') {
+                child.remove();
+              }
+            });
+          } else if (columnName === 'Action') {
+            rows[i].childNodes.forEach(child => {
+              if (child.className === 'action_column') {
                 child.remove();
               }
             });
@@ -1574,7 +1581,7 @@ toggleButtons.forEach(toggle => {
         console.log('contains or not:', [...rowHeaders.children].map(child => {
           return child.id;
         }).includes(columnName));
-        createHeader(rowHeaders)
+        // createHeader(rowHeaders)
         // const header = document.createElement('th');
         // header.innerHTML = columnName;
         // header.classList.add('column_header');
