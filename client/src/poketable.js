@@ -1325,7 +1325,7 @@ const addSortButtons = () => {
 
   const nameHeader = document.getElementById('name');
   const numberHeader = document.getElementById('number');
-  const typeHeader = document.getElementById('type');
+  const typeHeader = document.getElementById('type(s)');
 
   nameHeader.appendChild(sortButton);
 
@@ -1348,12 +1348,23 @@ const addRows = (page) => {
     const nameCol = document.createElement('td');
     nameCol.classList.add('name_column');
     const numCol = document.createElement('td');
-    numCol.classList.add('num_column');
+    numCol.classList.add('number_column');
     const typeCol = document.createElement('td');
-    typeCol.classList.add('type_column');
+    typeCol.classList.add('types_column');
     const imgCol = document.createElement('td');
     imgCol.classList.add('image_column');
-    const img = new Image(80, 80);
+    const img = new Image(70, 70);
+    const taskCol = document.createElement('td');
+    const editImg = new Image(20, 20);
+    editImg.src = 'https://www.iconexperience.com/_img/i_collection_png/256x256/plain/pencil.png';
+    editImg.classList.add('action');
+    editImg.classList.add('edit');
+    editImg.classList.add(`row_${i}`);
+    const deleteImg = new Image(20, 20);
+    deleteImg.src = 'https://image.freepik.com/free-icon/x-circle_318-2105.jpg';
+    deleteImg.classList.add('action');
+    deleteImg.classList.add('delete');
+    deleteImg.classList.add(`row_${i}`);
     img.src = pokemonData[i].imageUrl;
     imgCol.appendChild(img);
     newRow.appendChild(nameCol).innerHTML = pokemonData[i].name;
@@ -1364,6 +1375,10 @@ const addRows = (page) => {
       newRow.appendChild(typeCol).innerHTML = pokemonData[i].types;
     }
     newRow.appendChild(imgCol);
+    taskCol.appendChild(editImg);
+    taskCol.appendChild(deleteImg);
+    newRow.appendChild(taskCol);
+    newRow.classList.add(`row_${i}`);
     tableBody.appendChild(newRow);
   }
   console.log(tableBody);
@@ -1517,8 +1532,9 @@ const columnHeaders = document.getElementsByClassName('column_header');
 const toggleButtons = [...toggleElements];
 toggleButtons.forEach(toggle => {
   toggle.addEventListener('click', e => {
-    const columnName = toggle.innerHTML;
+    let columnName = toggle.innerHTML;
     for (var i = 0; i < columnHeaders.length; i++) {
+      console.log('column headers', columnHeaders)
       if (columnName === columnHeaders[i].innerText) {
         const nameColumn = document.getElementsByClassName('name_column');
         const rows = document.getElementsByTagName('tr');
@@ -1552,9 +1568,93 @@ toggleButtons.forEach(toggle => {
             });
           }
         }
+      } else {
+        addRows();
+        const rowHeaders = document.getElementById('headers_row');
+        console.log('contains or not:', [...rowHeaders.children].map(child => {
+          return child.id;
+        }).includes(columnName));
+        createHeader(rowHeaders)
+        // const header = document.createElement('th');
+        // header.innerHTML = columnName;
+        // header.classList.add('column_header');
+        // header.id = columnName.toLowerCase();
+
+        // rowHeaders.appendChild(header);
       }
     }
   });
 });
+
+const addEditing = () => {
+  const actionElements = document.getElementsByClassName('action');
+    [...actionElements].forEach(action => {
+    action.addEventListener('click', e => {
+      if (action.classList.contains('edit')) {
+        const rowToEdit = action.classList[2];
+        const row = document.getElementsByClassName(rowToEdit)[0];
+
+        row.classList.add('editing');
+        console.log(row);
+        let input;
+        let edit = '';
+        row.childNodes.forEach((child, i, array) => {
+          if (i !== array.length - 1) {
+            input = document.createElement('input');
+            child.appendChild(input);
+            input.placeholder = child.innerText;
+          }
+          input.addEventListener('input', e => {
+            console.log(e.target.value, e);
+            edit = e.target.value;
+            console.log(edit, 'edit')
+          });
+            input.innerText = edit;
+            input.classList.add(rowToEdit + 'input');
+          // input.setAttribute('onkeypress', handlEnter(e));
+        });
+        action.classList.remove('edit');
+        action.classList.add('save');
+            console.log('action classlist after edit', action.classList)
+      } else {
+        console.log('saving')
+        console.log(action.classList)
+        const rowToSave = action.classList[1][action.classList[1].length - 1];
+        const updatedInfo = document.getElementsByClassName(action.classList[1] + 'input');
+        const dataObj = {};
+        [...updatedInfo].forEach(info => {
+          const key = info.parentNode.className.split('_')[0];
+          console.log(key, 'key', info.value);
+          dataObj[key] = info.value;
+        });
+        editPokemonData(rowToSave, dataObj);
+        // const rowSave = document.getElementsByClassName(rowToSave)[0];
+        // console.log(rowSave)
+        // rowSave.childNodes.forEach(child => {
+        //   console.log('CHILDNODES', child.childNodes)
+        //   child.innerHTML = child.childNodes[1].value;
+        //     // if (child.childNodes[1].value === '') {
+        //     //   child.innerHTML = child.childNodes[1].placeholder;
+        //     // }
+        // })
+        action.classList.remove('save');
+        action.classList.add('edit');
+        console.log('action after saving', action.classList)
+      }
+    })
+  })
+}
+
+addEditing();
+const editPokemonData = (row, dataObj) => {
+  const pokemonEntry = pokemonData[parseInt(row)];
+  console.log('edit data', dataObj)
+  console.log(pokemonEntry);
+  for (var key in dataObj) {
+    pokemonEntry[key] = dataObj[key];
+  }
+  addRows();
+  addEditing();
+}
 
 // getAllPokemon();
