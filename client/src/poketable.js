@@ -1615,7 +1615,10 @@ const addEditing = () => {
         });
         action.classList.remove('edit');
         action.classList.add('save');
-            console.log('action classlist after edit', action.classList)
+      } else if (action.classList.contains('delete')) {
+        const rowToDelete = action.classList[2];
+        console.log('delete row', rowToDelete)
+        deleteRow(rowToDelete[rowToDelete.length - 1]);
       } else {
         console.log('saving')
         console.log(action.classList)
@@ -1628,24 +1631,15 @@ const addEditing = () => {
           dataObj[key] = info.value;
         });
         editPokemonData(rowToSave, dataObj);
-        // const rowSave = document.getElementsByClassName(rowToSave)[0];
-        // console.log(rowSave)
-        // rowSave.childNodes.forEach(child => {
-        //   console.log('CHILDNODES', child.childNodes)
-        //   child.innerHTML = child.childNodes[1].value;
-        //     // if (child.childNodes[1].value === '') {
-        //     //   child.innerHTML = child.childNodes[1].placeholder;
-        //     // }
-        // })
-        action.classList.remove('save');
         action.classList.add('edit');
-        console.log('action after saving', action.classList)
+        action.classList.remove('save');
       }
     })
   })
 }
 
 addEditing();
+
 const editPokemonData = (row, dataObj) => {
   const pokemonEntry = pokemonData[parseInt(row)];
   console.log('edit data', dataObj)
@@ -1653,6 +1647,14 @@ const editPokemonData = (row, dataObj) => {
   for (var key in dataObj) {
     pokemonEntry[key] = dataObj[key];
   }
+  addRows();
+  addEditing();
+}
+
+const deleteRow = (row) => {
+  const pokemonRow = pokemonData[parseInt(row)];
+  console.log(pokemonRow, 'pokemonRow')
+  pokemonData.splice(pokemonRow, 1);
   addRows();
   addEditing();
 }
