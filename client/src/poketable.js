@@ -61,7 +61,7 @@ const addRow = (row) => {
 
   nameCol.innerHTML = pokemon.name;
   numberCol.innerHTML = pokemon.number;
-  typesCol.innerHTML = pokemon.types;
+  typesCol.innerHTML = pokemon.types.length === 2 ? pokemon.types[0] + '/' + pokemon.types[1] : pokemon.types;
   sprite.src = pokemon.imageUrl;
   editButton.src = editImage;
   deleteButton.src = deleteImage;
@@ -259,7 +259,7 @@ const addSortButtons = () => {
 
   sortButton.classList.add('name', 'sort');
   sortButton2.classList.add('number', 'sort');
-  sortButton3.classList.add('type', 'sort');
+  sortButton3.classList.add('types', 'sort');
   const headers = document.getElementsByTagName('th');
 
   headers[0].appendChild(sortButton);
@@ -271,24 +271,22 @@ addSortButtons();
 
 //sort the pokemon dataset based off column name
 const sortColumn = (column) => {
-  // const sortedPokemonData = pokemonData.sort((a, b) => {
-  //   return a[column] < b[column] ? -1 : a[column] > b[column] ? 1 : 0;
-  // });
+  const sortedPokemonData = pokemonData.sort((a, b) => {
+    return a[column] < b[column] ? -1 : a[column] > b[column] ? 1 : 0;
+  });
 
-  // return sortedPokemonData;
+  return sortedPokemonData;
+};
+
+const addSorting = () => {
   const sortButtonElements = document.getElementsByClassName('sort');
   const sortButtons = [...sortButtonElements];
 
   sortButtons.forEach(button => {
     button.addEventListener('click', e => {
-      const columnToSort = el.classList[1];
-      // let sortedPokemonData = sortColumn(columnToSort);
-      let sortedPokemonData = pokemonData.sort((a, b) => {
-        return a[column] < b[column] ? -1 : a[column] > b[column] ? 1 : 0;
-      });
+      const columnToSort = button.classList[1];
+      let sortedPokemonData = sortColumn(columnToSort);
       clearTable();
-      console.log('clicked', el.classList)
-
       if (button.classList.contains('sorted')) {
         sortedPokemonData = sortedPokemonData.reverse();
         button.classList.remove('sorted');
@@ -296,12 +294,12 @@ const sortColumn = (column) => {
       } else {
         button.classList.add('sorted');
       }
-      console.log('current page inside sort', currentPage)
-      addRows(currentPage);
+      populatePage(currentPage);
     });
   });
 };
 
+addSorting();
 // const addEditing = () => {
 //   const actionElements = document.getElementsByClassName('action');
 //     [...actionElements].forEach(action => {
