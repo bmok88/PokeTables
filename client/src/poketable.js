@@ -1,13 +1,16 @@
 "use strict";
 
-const pokeAPI = 'http://pokeapi.co/api/v2/pokemon/';
+// const pokeAPI = 'http://pokeapi.co/api/v2/pokemon/';
 const sortButtonUrl = "https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg";
-const pokemonData = require('./practice.js');
+const pokemonData = require('./pokemonData.js');
 const editImage = 'https://www.iconexperience.com/_img/i_collection_png/256x256/plain/pencil.png';
 const deleteImage = 'https://image.freepik.com/free-icon/x-circle_318-2105.jpg';
 const tableBody = document.getElementById('pokebody');
 
+//I use this currentPage variable to keep track of page state.
+let currentPage = 1;
 
+//I tried to use the Pokemon API, but I had trouble with it
 //Get request that returns array of all 150 pokemon url's
 
 // const getAllPokemon = () => {
@@ -274,8 +277,6 @@ const addSorting = () => {
   });
 };
 
-let currentPage = 1;
-
 const rotatePages = (pageButtons, currentPage, direction) => {
   pageButtons.forEach(button => {
     if (button.classList.contains('button-border')) {
@@ -413,22 +414,6 @@ const choosePage = () => {
   });
 };
 
-firstPage();
-previousPage();
-nextPage();
-lastPage();
-choosePage();
-
-
-addSortButtons();
-
-
-addSorting();
-
-addEditing();
-
-addDeletion();
-
 const toggleColumns = () => {
   const toggleButtonElements = document.getElementsByClassName('toggle');
   console.log(toggleButtonElements)
@@ -451,8 +436,6 @@ const toggleColumns = () => {
   });
 };
 
-toggleColumns();
-
 const showAllRemainingRows = (currentPage) => {
   console.log('currentPage', currentPage)
   for (let i = currentPage + 1; i <= 15; i++) {
@@ -464,8 +447,6 @@ const showAllRemainingRows = (currentPage) => {
     tr[i].style.display = 'none';
   }
 };
-
-// showAllRemainingRows(currentPage);
 
 const searchNames = () => {
   const searchTerm = document.getElementById('namesearch');
@@ -523,7 +504,13 @@ const searchTypes = () => {
 
 document.getElementById('typesearch').onkeyup = searchTypes;
 
-
-
-
-
+firstPage();
+previousPage();
+nextPage();
+lastPage();
+choosePage();
+addSortButtons();
+addSorting();
+addEditing();
+addDeletion();
+toggleColumns();
