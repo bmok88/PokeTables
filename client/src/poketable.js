@@ -550,12 +550,33 @@ addDeletion();
 
 // addRows(pokemonData, 0, 9);
 
+const toggleColumns = () => {
+  const toggleButtonElements = document.getElementsByClassName('toggle');
+  console.log(toggleButtonElements)
+  const toggleButtons = [...toggleButtonElements];
+  toggleButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      const columnName = button.innerHTML.toLowerCase();
+      console.log(columnName, 'columnName')
+      const columnToToggleElements = document.getElementsByClassName(columnName);
+      const columnToToggle = [...columnToToggleElements];
+      console.log(columnToToggle);
+      columnToToggle.forEach(cell => {
+        if (!cell.style.display) {
+          cell.style.display = 'none';
+        } else {
+          cell.style.display = '';
+        }
+      });
+    });
+  });
+};
 
-
-
-
-// const toggleElements = document.getElementsByClassName('toggle_button');
+toggleColumns();
 // const columnHeaders = document.getElementsByClassName('column_header');
+
+
+
 // console.log(columnHeaders, 'line 1531')
 // const toggleButtons = [...toggleElements];
 // toggleButtons.forEach(toggle => {
