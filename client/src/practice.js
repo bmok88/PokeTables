@@ -1339,3 +1339,56 @@ var pokemonData = [{
 ];
 
 module.exports = pokemonData;
+
+// const addEditing = () => {
+//   const actionElements = document.getElementsByClassName('action');
+//     [...actionElements].forEach(action => {
+//     action.addEventListener('click', e => {
+//       if (action.classList.contains('edit')) {
+//         const rowToEdit = action.classList[2];
+//         const row = document.getElementsByClassName(rowToEdit)[0];
+
+//         row.classList.add('editing');
+//         console.log(row);
+//         let input;
+//         let edit = '';
+//         row.childNodes.forEach((child, i, array) => {
+//           if (i !== array.length - 1) {
+//             input = document.createElement('input');
+//             child.appendChild(input);
+//             input.placeholder = child.innerText;
+//           }
+//           input.addEventListener('input', e => {
+//             console.log(e.target.value, e);
+//             edit = e.target.value;
+//             console.log(edit, 'edit')
+//           });
+//             input.innerText = edit;
+//             input.classList.add(rowToEdit + 'input');
+//           // input.setAttribute('onkeypress', handlEnter(e));
+//         });
+//         action.classList.remove('edit');
+//         action.classList.add('save');
+//       } else if (action.classList.contains('delete')) {
+//         const rowToDelete = action.classList[2];
+//         console.log('delete row', rowToDelete)
+//         console.log('array index',  rowToDelete[rowToDelete.length - 1]);
+//         deleteRow(rowToDelete[rowToDelete.length - 1]);
+//       } else {
+//         console.log('saving')
+//         console.log(action.classList)
+//         const rowToSave = action.classList[1][action.classList[1].length - 1];
+//         const updatedInfo = document.getElementsByClassName(action.classList[1] + 'input');
+//         const dataObj = {};
+//         [...updatedInfo].forEach(info => {
+//           const key = info.parentNode.className.split('_')[0];
+//           console.log(key, 'key', info.value);
+//           dataObj[key] = info.value;
+//         });
+//         editPokemonData(rowToSave, dataObj);
+//         action.classList.add('edit');
+//         action.classList.remove('save');
+//       }
+//     })
+//   })
+// }

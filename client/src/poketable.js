@@ -49,43 +49,46 @@ const tableBody = document.getElementById('pokebody');
 
 const addRow = (row) => {
   const pokemon = pokemonData[row];
-  const newRow = document.createElement('tr');
-  const nameCol = document.createElement('td');
-  const numberCol = document.createElement('td');
-  const typesCol = document.createElement('td');
-  const imageCol = document.createElement('td');
-  const actionsCol = document.createElement('td');
-  const sprite = new Image(80, 80);
-  const editButton = new Image(20, 20);
-  const deleteButton = new Image(20, 20);
+  if (pokemon) {
+    const newRow = document.createElement('tr');
+    const nameCol = document.createElement('td');
+    const numberCol = document.createElement('td');
+    const typesCol = document.createElement('td');
+    const imageCol = document.createElement('td');
+    const actionsCol = document.createElement('td');
+    const sprite = new Image(80, 80);
+    const editButton = new Image(20, 20);
+    const deleteButton = new Image(20, 20);
 
-  nameCol.innerHTML = pokemon.name;
-  numberCol.innerHTML = pokemon.number;
-  typesCol.innerHTML = pokemon.types.length === 2 ? pokemon.types[0] + '/' + pokemon.types[1] : pokemon.types;
-  sprite.src = pokemon.imageUrl;
-  editButton.src = editImage;
-  deleteButton.src = deleteImage;
+    nameCol.innerHTML = pokemon.name;
+    numberCol.innerHTML = pokemon.number;
+    typesCol.innerHTML = pokemon.types.length === 2 ? pokemon.types[0] + '/' + pokemon.types[1] : pokemon.types;
+    sprite.src = pokemon.imageUrl;
+    editButton.src = editImage;
+    deleteButton.src = deleteImage;
 
-  newRow.classList.add(row);
-  nameCol.classList.add('name', 'row');
-  numberCol.classList.add('number', 'row');
-  typesCol.classList.add('types', 'row');
-  imageCol.classList.add('image', 'row');
-  actionsCol.classList.add('actions', 'row');
+    newRow.classList.add('row', row);
+    nameCol.classList.add('name', 'cell');
+    numberCol.classList.add('number', 'cell');
+    typesCol.classList.add('types', 'cell');
+    imageCol.classList.add('image', 'cell');
+    editButton.classList.add('edit', 'cell', row);
+    deleteButton.classList.add('delete', 'cell', row);
+    actionsCol.classList.add('actions', 'cell');
 
-  imageCol.appendChild(sprite);
-  actionsCol.appendChild(editButton);
-  actionsCol.appendChild(deleteButton);
-  newRow.appendChild(nameCol);
-  newRow.appendChild(numberCol);
-  newRow.appendChild(typesCol);
-  newRow.appendChild(imageCol);
-  newRow.appendChild(actionsCol);
-  tableBody.appendChild(newRow);
+    imageCol.appendChild(sprite);
+    actionsCol.appendChild(editButton);
+    actionsCol.appendChild(deleteButton);
+    newRow.appendChild(nameCol);
+    newRow.appendChild(numberCol);
+    newRow.appendChild(typesCol);
+    newRow.appendChild(imageCol);
+    newRow.appendChild(actionsCol);
+    tableBody.appendChild(newRow);
+  }
 };
 
 const populatePage = (page) => {
-  console.log('populating page', page)
   const pageToRows = {
     1: 0,
     2: 10,
@@ -117,6 +120,145 @@ const clearTable = () => {
     tableBody.removeChild(tableBody.firstChild);
   }
 };
+
+const addEditing = () => {
+  const editButtonElements = document.getElementsByClassName('edit');
+  const editButtons = [...editButtonElements];
+
+  editButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      const row = button.classList[2];
+      const rowToEdit = document.getElementsByClassName(button.classList[2])[0];
+      console.log(button.classList)
+      if (!button.classList.contains('editing')) {
+        rowToEdit.childNodes.forEach((child, i) => {
+          if (i < 4) {
+            editCell(child, i, row);
+          }
+        });
+        button.classList.add('editing');
+      } else {
+        const editedCellElements = document.getElementsByClassName('new');
+        const editedCells = [...editedCellElements];
+
+        saveCells(editedCells, row);
+        button.classList.remove('editing');
+      }
+    });
+  });
+};
+
+const editCell = (cell, i, row) => {
+  let edit;
+  let isEditing = false;
+  let oldText = cell.innerHTML;
+  let input = document.createElement('input');
+
+  if (cell.classList.contains('image')) {
+    oldText = cell.childNodes[0].src;
+  }
+  cell.innerHTML = '';
+  cell.appendChild(input);
+  if (i === 3) {
+    input.placeholder = 'Paste a new image url';
+  } else {
+    input.placeholder = oldText;
+  }
+  input.addEventListener('input', e => {
+    edit = e.target.value;
+    isEditing = true;
+  });
+  if (isEditing) {
+    input.innerText = edit;
+  } else {
+    input.innerText = oldText;
+  }
+
+  input.classList.add('new');
+};
+
+const saveCells = (cells, row) => {
+  const pokemon = pokemonData[row];
+  pokemon.name = cells[0].value ? cells[0].value : cells[0].textContent;
+  pokemon.number = cells[1].value ? cells[1].value : cells[1].textContent;
+  pokemon.types = cells[2].value ? cells[2].value : cells[2].textContent;
+  pokemon.imageUrl = cells[3].value ? cells[3].value : cells[3].textContent;
+  clearTable();
+  populatePage(currentPage);
+  addEditing();
+  addDeletion();
+};
+
+const addDeletion = () => {
+  const deleteButtonElements = document.getElementsByClassName('delete');
+  const deleteButtons = [...deleteButtonElements];
+
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      const row = button.classList[2];
+      deleteRow(row);
+    });
+  });
+};
+
+const deleteRow = (row) => {
+  pokemonData.splice(row, 1);
+  clearTable();
+  populatePage(currentPage);
+  addEditing();
+  addDeletion();
+};
+
+const addSortButtons = () => {
+  const sortButton = new Image(12, 12);
+
+  sortButton.classList.add('sort');
+  sortButton.src = sortButtonUrl;
+  const sortButton2 = sortButton.cloneNode();
+  const sortButton3 = sortButton.cloneNode();
+
+  sortButton.classList.add('name', 'sort');
+  sortButton2.classList.add('number', 'sort');
+  sortButton3.classList.add('types', 'sort');
+  const headers = document.getElementsByTagName('th');
+
+  headers[0].appendChild(sortButton);
+  headers[1].appendChild(sortButton2);
+  headers[2].appendChild(sortButton3);
+};
+
+//sort the pokemon dataset based off column name
+const sortColumn = (column) => {
+  const sortedPokemonData = pokemonData.sort((a, b) => {
+    return a[column] < b[column] ? -1 : a[column] > b[column] ? 1 : 0;
+  });
+
+  return sortedPokemonData;
+};
+
+const addSorting = () => {
+  const sortButtonElements = document.getElementsByClassName('sort');
+  const sortButtons = [...sortButtonElements];
+
+  sortButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      const columnToSort = button.classList[1];
+      let sortedPokemonData = sortColumn(columnToSort);
+      clearTable();
+      if (button.classList.contains('sorted')) {
+        sortedPokemonData = sortedPokemonData.reverse();
+        button.classList.remove('sorted');
+        console.log('after sorted', button.classList)
+      } else {
+        button.classList.add('sorted');
+      }
+      populatePage(currentPage);
+      addEditing();
+      addDeletion();
+    });
+  });
+};
+
 let currentPage = 1;
 
 const rotatePages = (pageButtons, currentPage, direction) => {
@@ -154,7 +296,9 @@ const firstPage = () => {
     currentPage = 1;
     clearTable();
     populatePage(1);
-    rotatePages(pageButtons, currentPage, 'up')
+    addEditing();
+    addDeletion();
+    rotatePages(pageButtons, currentPage, 'up');
   });
 };
 
@@ -170,6 +314,8 @@ const lastPage = () => {
     currentPage = 15;
     clearTable();
     populatePage(15);
+    addEditing();
+    addDeletion();
     rotatePages(pageButtons, currentPage, 'down');
   });
 };
@@ -183,6 +329,8 @@ const previousPage = () => {
     if (currentPage > 1) {
       clearTable();
       populatePage(--currentPage);
+      addEditing();
+      addDeletion();
     } else {
       return;
     }
@@ -199,7 +347,6 @@ const previousPage = () => {
   });
 };
 
-
 const nextPage = () => {
   const nextPageElement = document.getElementById('next');
   const pageButtonElements = document.getElementsByClassName('nums');
@@ -209,6 +356,8 @@ const nextPage = () => {
     if (currentPage < 15) {
       clearTable();
       populatePage(++currentPage);
+      addEditing();
+      addDeletion();
     } else {
       return;
     }
@@ -238,6 +387,8 @@ const choosePage = () => {
       console.log('currentPage', currentPage)
       clearTable();
       populatePage(currentPage);
+      addEditing();
+      addDeletion();
     });
   });
 };
@@ -249,57 +400,16 @@ lastPage();
 choosePage();
 
 
-const addSortButtons = () => {
-  const sortButton = new Image(12, 12);
-
-  sortButton.classList.add('sort');
-  sortButton.src = sortButtonUrl;
-  const sortButton2 = sortButton.cloneNode();
-  const sortButton3 = sortButton.cloneNode();
-
-  sortButton.classList.add('name', 'sort');
-  sortButton2.classList.add('number', 'sort');
-  sortButton3.classList.add('types', 'sort');
-  const headers = document.getElementsByTagName('th');
-
-  headers[0].appendChild(sortButton);
-  headers[1].appendChild(sortButton2);
-  headers[2].appendChild(sortButton3);
-};
-
 addSortButtons();
 
-//sort the pokemon dataset based off column name
-const sortColumn = (column) => {
-  const sortedPokemonData = pokemonData.sort((a, b) => {
-    return a[column] < b[column] ? -1 : a[column] > b[column] ? 1 : 0;
-  });
-
-  return sortedPokemonData;
-};
-
-const addSorting = () => {
-  const sortButtonElements = document.getElementsByClassName('sort');
-  const sortButtons = [...sortButtonElements];
-
-  sortButtons.forEach(button => {
-    button.addEventListener('click', e => {
-      const columnToSort = button.classList[1];
-      let sortedPokemonData = sortColumn(columnToSort);
-      clearTable();
-      if (button.classList.contains('sorted')) {
-        sortedPokemonData = sortedPokemonData.reverse();
-        button.classList.remove('sorted');
-        console.log('after sorted', button.classList)
-      } else {
-        button.classList.add('sorted');
-      }
-      populatePage(currentPage);
-    });
-  });
-};
 
 addSorting();
+
+addEditing();
+
+addDeletion();
+
+
 // const addEditing = () => {
 //   const actionElements = document.getElementsByClassName('action');
 //     [...actionElements].forEach(action => {
