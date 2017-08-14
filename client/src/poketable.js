@@ -1,9 +1,11 @@
+"use strict";
+
 const pokeAPI = 'http://pokeapi.co/api/v2/pokemon/';
 const sortButtonUrl = "https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg";
 const pokemonData = require('./practice.js');
 const editImage = 'https://www.iconexperience.com/_img/i_collection_png/256x256/plain/pencil.png';
 const deleteImage = 'https://image.freepik.com/free-icon/x-circle_318-2105.jpg';
-console.log(pokemonData, 'data')
+const tableBody = document.getElementById('pokebody');
 //Get request that returns array of all 150 pokemon url's
 
 // const getAllPokemon = () => {
@@ -51,7 +53,6 @@ const addRow = (row) => {
   const typesCol = document.createElement('td');
   const imageCol = document.createElement('td');
   const actionsCol = document.createElement('td');
-  const tableBody = document.getElementById('pokebody');
   const sprite = new Image(80, 80);
   const editButton = new Image(20, 20);
   const deleteButton = new Image(20, 20);
@@ -107,6 +108,46 @@ const populatePage = (page) => {
 };
 
 populatePage(1);
+
+const clearTable = () => {
+  while (tableBody.hasChildNodes()) {
+    tableBody.removeChild(tableBody.firstChild);
+  }
+};
+
+const firstPage = () => {
+  const firstPageElement = document.getElementsByClassName('first');
+  const firstPageButton = firstPageElement[0];
+
+  firstPageButton.addEventListener('click', e => {
+    clearTable();
+    populatePage(1);
+  });
+};
+
+firstPage();
+
+const lastPage = () => {
+  const lastPageElement = document.getElementsByClassName('last');
+  const lastPageButton = lastPageElement[0];
+
+  lastPageButton.addEventListener('click', e => {
+    clearTable();
+    populatePage(15);
+  });
+};
+
+lastPage();
+
+const switchPages = () => {
+  const pageButtonElements = document.getElementsByClassName('paginate_button');
+  const pageButtons = [...pageButtonElements];
+  pageButtons.forEach(button => {
+    button.addEventListener('click', e => {
+
+    });
+  });
+};
 // const addEditing = () => {
 //   const actionElements = document.getElementsByClassName('action');
 //     [...actionElements].forEach(action => {
@@ -257,81 +298,7 @@ populatePage(1);
 // };
 
 // let currentPage = 1;
-// const pageButtonElements = document.getElementsByClassName('paginate_button');
-// const pageButtons = [...pageButtonElements];
-// pageButtons.forEach(button => {
-//   button.addEventListener('click', e => {
-//     const page = e.target.innerHTML;
-//     console.log(button)
-//     pageButtons.forEach(btn => {
-//       btn.classList.remove('button-border');
-//     });
 
-//     if (page === 'Next') {
-//       if (currentPage < 15) {
-//         currentPage++;
-//       } else {
-//         currentPage = 15;
-//       }
-//       //Updates the page bar to show current range of pages on next click
-//       if (currentPage > parseInt(pageButtons[6].innerHTML)) {
-//         pageButtons[2].innerHTML = parseInt(pageButtons[2].innerHTML) + 1;
-//         pageButtons[3].innerHTML = parseInt(pageButtons[3].innerHTML) + 1;
-//         pageButtons[4].innerHTML = parseInt(pageButtons[4].innerHTML) + 1;
-//         pageButtons[5].innerHTML = parseInt(pageButtons[5].innerHTML) + 1;
-//         pageButtons[6].innerHTML = parseInt(pageButtons[6].innerHTML) + 1;
-//       }
-
-//       pageButtons.forEach(button => {
-//         if (parseInt(button.innerHTML) === currentPage) {
-//           button.classList.add('button-border');
-//         }
-//       });
-//     } else if (page === 'Last') {
-//       currentPage = 15;
-//       //Updates the page bar to show current range of pages on last click
-//       pageButtons[2].innerHTML = currentPage - 4;
-//       pageButtons[3].innerHTML = currentPage - 3;
-//       pageButtons[4].innerHTML = currentPage - 2;
-//       pageButtons[5].innerHTML = currentPage - 1;
-//       pageButtons[6].innerHTML = currentPage;
-//       pageButtons[6].classList.add('button-border');
-//     } else if (page === 'Previous') {
-//       if (currentPage > 1) {
-//         currentPage--;
-//       } else {
-//         currentPage = 1;
-//       }
-//       //Updates the page bar to show current range of pages on previous click
-//       if (currentPage < parseInt(pageButtons[2].innerHTML)) {
-//         pageButtons[2].innerHTML = parseInt(pageButtons[2].innerHTML) - 1;
-//         pageButtons[3].innerHTML = parseInt(pageButtons[3].innerHTML) - 1;
-//         pageButtons[4].innerHTML = parseInt(pageButtons[4].innerHTML) - 1;
-//         pageButtons[5].innerHTML = parseInt(pageButtons[5].innerHTML) - 1;
-//         pageButtons[6].innerHTML = parseInt(pageButtons[6].innerHTML) - 1;
-//       }
-//       pageButtons.forEach(button => {
-//         if (parseInt(button.innerHTML) === currentPage) {
-//           button.classList.add('button-border');
-//         }
-//       });
-//     } else if (page === 'First') {
-//       //Updates the page bar to show current range of pages on first click
-//       currentPage = 1;
-//       pageButtons[2].innerHTML = currentPage;
-//       pageButtons[3].innerHTML = currentPage + 1;
-//       pageButtons[4].innerHTML = currentPage + 2;
-//       pageButtons[5].innerHTML = currentPage + 3;
-//       pageButtons[6].innerHTML = currentPage + 4;
-//       pageButtons[2].classList.add('button-border');
-//     } else {
-//       currentPage = page;
-//       button.classList.add('button-border');
-//     }
-
-//     addRows(page);
-//   });
-// });
 
 
 // const clearTable = () => {
