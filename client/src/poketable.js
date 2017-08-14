@@ -45,7 +45,6 @@ console.log(pokemonData, 'data')
 
 const addRow = (row) => {
   const pokemon = pokemonData[row];
-  console.log('pokemon', pokemon)
   const newRow = document.createElement('tr');
   const nameCol = document.createElement('td');
   const numberCol = document.createElement('td');
@@ -81,7 +80,33 @@ const addRow = (row) => {
   newRow.appendChild(actionsCol);
   tableBody.appendChild(newRow);
 };
-addRow(0)
+
+const populatePage = (page) => {
+  const pageToRows = {
+    1: 0,
+    2: 10,
+    3: 20,
+    4: 30,
+    5: 40,
+    6: 50,
+    7: 60,
+    8: 70,
+    9: 80,
+    10: 90,
+    11: 100,
+    12: 110,
+    13: 120,
+    14: 130,
+    15: 140
+  };
+  const firstRowOfPage = pageToRows[page];
+
+  for (var i = firstRowOfPage; i < firstRowOfPage + 10; i++) {
+    addRow(i);
+  }
+};
+
+populatePage(1);
 // const addEditing = () => {
 //   const actionElements = document.getElementsByClassName('action');
 //     [...actionElements].forEach(action => {
