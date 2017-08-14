@@ -1,14 +1,31 @@
-table, th, td {
-  border: 2px solid;
+* {
+  box-sizing: border-box;
+  font-family: 'Raleway', sans-serif;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
 }
 
 table {
   width: 100%;
-  margin: 50px 0;
+  padding: 50px 0;
+}
+
+#headers_row {
+  font-size: 35px;
 }
 
 #pages {
   float: right;
+  font-size: 30px;
+}
+
+#pages a {
+  padding: 0 5px;
 }
 
 th {
@@ -29,14 +46,34 @@ a {
   text-decoration: none;
 }
 
-th.toggle, td.toggle {
-  visibility: hidden;
+.searchbar {
+  float: right;
+  padding: 20px 5px;
+  font-size: 20px;
+  margin-right: -25px;
 }
 
-#search {
-  float: right;
+.searchbar input {
+  width: 50%;
+  height: 30px;
+}
+
+#toggles {
+  float: left;
+  padding-top: 22px;
+  padding-left: 10px;
+  font-size: 20px;
 }
 
 .actions img {
   padding: 0 4px;
 }
+
+#pokebody tr td{
+  font-size: 25px;
+}
+
+#pokebody tr:hover {
+  background-color: #f1f1f1;
+}
+

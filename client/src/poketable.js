@@ -56,9 +56,9 @@ const addRow = (row) => {
     const typesCol = document.createElement('td');
     const imageCol = document.createElement('td');
     const actionsCol = document.createElement('td');
-    const sprite = new Image(80, 80);
-    const editButton = new Image(20, 20);
-    const deleteButton = new Image(20, 20);
+    const sprite = new Image(70, 70);
+    const editButton = new Image(40, 40);
+    const deleteButton = new Image(40, 40);
 
     nameCol.innerHTML = pokemon.name;
     numberCol.innerHTML = pokemon.number;
@@ -87,6 +87,44 @@ const addRow = (row) => {
     tableBody.appendChild(newRow);
   }
 };
+const addEditing = () => {
+  const editButtonElements = document.getElementsByClassName('edit');
+  const editButtons = [...editButtonElements];
+
+  editButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      const row = button.classList[2];
+      const rowToEdit = document.getElementsByClassName(button.classList[2])[0];
+
+      if (!button.classList.contains('editing')) {
+        rowToEdit.childNodes.forEach((child, i) => {
+          if (i < 4) {
+            editCell(child, i, row);
+          }
+        });
+        button.classList.add('editing');
+      } else {
+        const editedCellElements = document.getElementsByClassName('new');
+        const editedCells = [...editedCellElements];
+
+        saveCells(editedCells, row);
+        button.classList.remove('editing');
+      }
+    });
+  });
+};
+
+const addDeletion = () => {
+  const deleteButtonElements = document.getElementsByClassName('delete');
+  const deleteButtons = [...deleteButtonElements];
+
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      const row = button.classList[2];
+      deleteRow(row);
+    });
+  });
+};
 
 const populatePage = (page) => {
   const pageToRows = {
@@ -113,7 +151,17 @@ const populatePage = (page) => {
   }
 };
 
-populatePage(1);
+const populateWholePage = () => {
+  for (var i = 1; i <= 15; i++) {
+    populatePage(i);
+  }
+  let tableRows = document.getElementsByTagName('tr');
+  for (var i = 11; i < tableRows.length; i++) {
+    tableRows[i].style.display = 'none';
+  }
+}
+
+populateWholePage();
 
 const clearTable = () => {
   while (tableBody.hasChildNodes()) {
@@ -121,34 +169,9 @@ const clearTable = () => {
   }
 };
 
-const addEditing = () => {
-  const editButtonElements = document.getElementsByClassName('edit');
-  const editButtons = [...editButtonElements];
-
-  editButtons.forEach(button => {
-    button.addEventListener('click', e => {
-      const row = button.classList[2];
-      const rowToEdit = document.getElementsByClassName(button.classList[2])[0];
-      console.log(button.classList)
-      if (!button.classList.contains('editing')) {
-        rowToEdit.childNodes.forEach((child, i) => {
-          if (i < 4) {
-            editCell(child, i, row);
-          }
-        });
-        button.classList.add('editing');
-      } else {
-        const editedCellElements = document.getElementsByClassName('new');
-        const editedCells = [...editedCellElements];
-
-        saveCells(editedCells, row);
-        button.classList.remove('editing');
-      }
-    });
-  });
-};
 
 const editCell = (cell, i, row) => {
+  console.log('row to edit', row);
   let edit;
   let isEditing = false;
   let oldText = cell.innerHTML;
@@ -183,34 +206,25 @@ const saveCells = (cells, row) => {
   pokemon.number = cells[1].value ? cells[1].value : cells[1].textContent;
   pokemon.types = cells[2].value ? cells[2].value : cells[2].textContent;
   pokemon.imageUrl = cells[3].value ? cells[3].value : cells[3].textContent;
+  console.log(pokemonData[row]);
   clearTable();
-  populatePage(currentPage);
+  populateWholePage();
   addEditing();
   addDeletion();
 };
 
-const addDeletion = () => {
-  const deleteButtonElements = document.getElementsByClassName('delete');
-  const deleteButtons = [...deleteButtonElements];
-
-  deleteButtons.forEach(button => {
-    button.addEventListener('click', e => {
-      const row = button.classList[2];
-      deleteRow(row);
-    });
-  });
-};
-
 const deleteRow = (row) => {
+  console.log('row to delete', row)
   pokemonData.splice(row, 1);
   clearTable();
   populatePage(currentPage);
   addEditing();
   addDeletion();
+  showAllRemainingRows(currentPage);
 };
 
 const addSortButtons = () => {
-  const sortButton = new Image(12, 12);
+  const sortButton = new Image(20, 20);
 
   sortButton.classList.add('sort');
   sortButton.src = sortButtonUrl;
@@ -255,6 +269,7 @@ const addSorting = () => {
       populatePage(currentPage);
       addEditing();
       addDeletion();
+      showAllRemainingRows(currentPage);
     });
   });
 };
@@ -298,6 +313,7 @@ const firstPage = () => {
     populatePage(1);
     addEditing();
     addDeletion();
+    showAllRemainingRows(currentPage);
     rotatePages(pageButtons, currentPage, 'up');
   });
 };
@@ -316,6 +332,7 @@ const lastPage = () => {
     populatePage(15);
     addEditing();
     addDeletion();
+    showAllRemainingRows(currentPage);
     rotatePages(pageButtons, currentPage, 'down');
   });
 };
@@ -329,6 +346,7 @@ const previousPage = () => {
     if (currentPage > 1) {
       clearTable();
       populatePage(--currentPage);
+      showAllRemainingRows(currentPage);
       addEditing();
       addDeletion();
     } else {
@@ -356,6 +374,7 @@ const nextPage = () => {
     if (currentPage < 15) {
       clearTable();
       populatePage(++currentPage);
+      showAllRemainingRows(currentPage);
       addEditing();
       addDeletion();
     } else {
@@ -387,6 +406,7 @@ const choosePage = () => {
       console.log('currentPage', currentPage)
       clearTable();
       populatePage(currentPage);
+      showAllRemainingRows(currentPage);
       addEditing();
       addDeletion();
     });
@@ -408,147 +428,6 @@ addSorting();
 addEditing();
 
 addDeletion();
-
-
-// const addEditing = () => {
-//   const actionElements = document.getElementsByClassName('action');
-//     [...actionElements].forEach(action => {
-//     action.addEventListener('click', e => {
-//       if (action.classList.contains('edit')) {
-//         const rowToEdit = action.classList[2];
-//         const row = document.getElementsByClassName(rowToEdit)[0];
-
-//         row.classList.add('editing');
-//         console.log(row);
-//         let input;
-//         let edit = '';
-//         row.childNodes.forEach((child, i, array) => {
-//           if (i !== array.length - 1) {
-//             input = document.createElement('input');
-//             child.appendChild(input);
-//             input.placeholder = child.innerText;
-//           }
-//           input.addEventListener('input', e => {
-//             console.log(e.target.value, e);
-//             edit = e.target.value;
-//             console.log(edit, 'edit')
-//           });
-//             input.innerText = edit;
-//             input.classList.add(rowToEdit + 'input');
-//           // input.setAttribute('onkeypress', handlEnter(e));
-//         });
-//         action.classList.remove('edit');
-//         action.classList.add('save');
-//       } else if (action.classList.contains('delete')) {
-//         const rowToDelete = action.classList[2];
-//         console.log('delete row', rowToDelete)
-//         console.log('array index',  rowToDelete[rowToDelete.length - 1]);
-//         deleteRow(rowToDelete[rowToDelete.length - 1]);
-//       } else {
-//         console.log('saving')
-//         console.log(action.classList)
-//         const rowToSave = action.classList[1][action.classList[1].length - 1];
-//         const updatedInfo = document.getElementsByClassName(action.classList[1] + 'input');
-//         const dataObj = {};
-//         [...updatedInfo].forEach(info => {
-//           const key = info.parentNode.className.split('_')[0];
-//           console.log(key, 'key', info.value);
-//           dataObj[key] = info.value;
-//         });
-//         editPokemonData(rowToSave, dataObj);
-//         action.classList.add('edit');
-//         action.classList.remove('save');
-//       }
-//     })
-//   })
-// }
-
-
-
-
-
-// const addRows = (page) => {
-//   //for non-API data set
-//   clearTable();
-//   const firstRowOfPage = choosePage(currentPage);
-//   console.log(firstRowOfPage)
-//   for (var i = firstRowOfPage; i <= firstRowOfPage + 9; i++) {
-//     const newRow = document.createElement('tr');
-//     const nameCol = document.createElement('td');
-//     nameCol.classList.add('name_column');
-//     const numCol = document.createElement('td');
-//     numCol.classList.add('number_column');
-//     const typeCol = document.createElement('td');
-//     typeCol.classList.add('types_column');
-//     const imgCol = document.createElement('td');
-//     imgCol.classList.add('image_column');
-//     const img = new Image(70, 70);
-//     const taskCol = document.createElement('td');
-//     taskCol.classList.add('action_column');
-//     const editImg = new Image(20, 20);
-//     editImg.src = 'https://www.iconexperience.com/_img/i_collection_png/256x256/plain/pencil.png';
-//     editImg.classList.add('action');
-//     editImg.classList.add('edit');
-//     editImg.classList.add(`row_${i}`);
-//     const deleteImg = new Image(20, 20);
-//     deleteImg.src = 'https://image.freepik.com/free-icon/x-circle_318-2105.jpg';
-//     deleteImg.classList.add('action');
-//     deleteImg.classList.add('delete');
-//     deleteImg.classList.add(`row_${i}`);
-//     img.src = pokemonData[i].imageUrl;
-//     imgCol.appendChild(img);
-//     newRow.appendChild(nameCol).innerHTML = pokemonData[i].name;
-//     newRow.appendChild(numCol).innerHTML = pokemonData[i].number;
-//     if (pokemonData[i].types.length > 1) {
-//       newRow.appendChild(typeCol).innerHTML = pokemonData[i].types[0] + '/' + pokemonData[i].types[1];
-//     } else {
-//       newRow.appendChild(typeCol).innerHTML = pokemonData[i].types;
-//     }
-//     newRow.appendChild(imgCol);
-//     taskCol.appendChild(editImg);
-//     taskCol.appendChild(deleteImg);
-//     newRow.appendChild(taskCol);
-//     newRow.classList.add(`row_${i}`);
-//     tableBody.appendChild(newRow);
-//   }
-//   addEditing();
-// };
-
-// const choosePage = (page) => {
-//   console.log('page inside choosePage', page)
-//   const pageToRows = {
-//     1: 0,
-//     2: 10,
-//     3: 20,
-//     4: 30,
-//     5: 40,
-//     6: 50,
-//     7: 60,
-//     8: 70,
-//     9: 80,
-//     10: 90,
-//     11: 100,
-//     12: 110,
-//     13: 120,
-//     14: 130,
-//     15: 140
-//   };
-//   const firstRowOfPage = pageToRows[page];
-
-//   return firstRowOfPage;
-// };
-
-// let currentPage = 1;
-
-
-
-// const clearTable = () => {
-//   while (tableBody.hasChildNodes()) {
-//     tableBody.removeChild(tableBody.firstChild);
-//   }
-// }
-
-// addRows(pokemonData, 0, 9);
 
 const toggleColumns = () => {
   const toggleButtonElements = document.getElementsByClassName('toggle');
@@ -573,113 +452,78 @@ const toggleColumns = () => {
 };
 
 toggleColumns();
-// const columnHeaders = document.getElementsByClassName('column_header');
+
+const showAllRemainingRows = (currentPage) => {
+  console.log('currentPage', currentPage)
+  for (let i = currentPage + 1; i <= 15; i++) {
+    populatePage(i);
+  }
+  let tr = tableBody.getElementsByTagName('tr');
+
+  for (let i = 10; i < tr.length; i++) {
+    tr[i].style.display = 'none';
+  }
+};
+
+// showAllRemainingRows(currentPage);
+
+const searchNames = () => {
+  const searchTerm = document.getElementById('namesearch');
+  let filter = searchTerm.value.toUpperCase();
+  let tr = tableBody.getElementsByTagName('tr');
+  for (let i = 0; i < tr.length; i++) {
+    const td = tr[i].getElementsByTagName('td')[0];
+
+    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+      tr[i].style.display = '';
+    } else {
+      tr[i].style.display = 'none';
+    }
+  }
+};
+
+document.getElementById('namesearch').onkeyup = searchNames;
+
+const searchNumbers = () => {
+  const searchTerm = document.getElementById('numbersearch');
+  console.log(searchTerm.value);
+  let filter = searchTerm.value;
+  let tr = tableBody.getElementsByTagName('tr');
+
+  for (let i = 0; i < tr.length; i++) {
+    const td = tr[i].getElementsByTagName('td')[1];
+
+    if (td.innerHTML === filter) {
+      tr[i].style.display = '';
+    } else {
+      tr[i].style.display = 'none';
+    }
+  }
+};
+
+document.getElementById('numbersearch').onkeyup = searchNumbers;
+
+const searchTypes = () => {
+  const searchTerm = document.getElementById('typesearch');
+  console.log(searchTerm.value);
+  let filter = searchTerm.value.toUpperCase();
+  let tr = tableBody.getElementsByTagName('tr');
+
+  for (let i = 0; i < tr.length; i++) {
+    const td = tr[i].getElementsByTagName('td')[2];
+    const firstType = td.innerHTML.split('/')[0].toUpperCase();
+
+    if (firstType.indexOf(filter) > -1) {
+      tr[i].style.display = '';
+    } else {
+      tr[i].style.display = 'none';
+    }
+  }
+};
+
+document.getElementById('typesearch').onkeyup = searchTypes;
 
 
 
-// console.log(columnHeaders, 'line 1531')
-// const toggleButtons = [...toggleElements];
-// toggleButtons.forEach(toggle => {
-//   toggle.addEventListener('click', e => {
-//     let columnName = toggle.innerHTML;
-//     for (var i = 0; i < columnHeaders.length; i++) {
-//       console.log('column headers', columnHeaders)
-//       if (columnName === columnHeaders[i].innerText) {
-//         const nameColumn = document.getElementsByClassName('name_column');
-//         const rows = document.getElementsByTagName('tr');
-
-//         columnHeaders[i].remove();
-//         for (var i = 0; i < rows.length; i++) {
-//           if (columnName === 'Name') {
-//             console.log('child rows', rows[i].childNodes)
-//             rows[i].childNodes.forEach(child => {
-//               if (child.className === 'name_column') {
-//                 child.remove();
-//               }
-//             });
-//           } else if (columnName === 'Number') {
-//             rows[i].childNodes.forEach(child => {
-//               if (child.className === 'number_column') {
-//                 child.remove();
-//               }
-//             });
-//           } else if (columnName === 'Type(s)') {
-//             rows[i].childNodes.forEach(child => {
-//               if (child.className === 'types_column') {
-//                 child.remove();
-//               }
-//             });
-//           } else if (columnName === 'Image') {
-//             rows[i].childNodes.forEach(child => {
-//               if (child.className === 'image_column') {
-//                 child.remove();
-//               }
-//             });
-//           } else if (columnName === 'Action') {
-//             rows[i].childNodes.forEach(child => {
-//               if (child.className === 'action_column') {
-//                 child.remove();
-//               }
-//             });
-//           }
-//         }
-//       } else {
-//         addRows();
-//         const rowHeaders = document.getElementById('headers_row');
-//         console.log('contains or not:', [...rowHeaders.children].map(child => {
-//           return child.id;
-//         }).includes(columnName));
-//         // createHeader(rowHeaders)
-//         // const header = document.createElement('th');
-//         // header.innerHTML = columnName;
-//         // header.classList.add('column_header');
-//         // header.id = columnName.toLowerCase();
-
-//         // rowHeaders.appendChild(header);
-//       }
-//     }
-//   });
-// });
 
 
-// addEditing();
-
-// const editPokemonData = (row, dataObj) => {
-//   const pokemonEntry = pokemonData[parseInt(row)];
-//   console.log('edit data', dataObj)
-//   console.log(pokemonEntry);
-//   for (var key in dataObj) {
-//     pokemonEntry[key] = dataObj[key];
-//   }
-//   addRows();
-//   addEditing();
-// }
-
-// const deleteRow = (row) => {
-//   pokemonData.splice(parseInt(row), 1);
-//   addRows();
-//   addEditing();
-// }
-
-// document.getElementById('term').onkeyup = function() { search() };
-
-// function search() {
-//   const searchTerm = document.getElementById('term');
-//   console.log(searchTerm.value);
-//   let filter = searchTerm.value.toUpperCase();
-//   let tr = tableBody.getElementsByTagName("tr");
-
-//   // Loop through all table rows, and hide those who don't match the search query
-//   for (i = 0; i < tr.length; i++) {
-//     td = tr[i].getElementsByTagName("td")[0];
-//     if (td) {
-//       if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-//         tr[i].style.display = "";
-//       } else {
-//         tr[i].style.display = "none";
-//       }
-//     }
-//   }
-// }
-
-// // getAllPokemon();

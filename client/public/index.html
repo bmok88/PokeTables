@@ -4,17 +4,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Poke Table</title>
   <link href="pokestyles.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 </head>
 <body>
-  <div>Toggle Column:
-    <a class="toggle">Name</a>
-    <a class="toggle">Number</a>
-    <a class="toggle">Types</a>
-    <a class="toggle">Image</a>
-    <a class="toggle">Actions</a>
+  <div id="toggles">Toggle Column:
+    <a href="javascript:void(0);" class="toggle">Name</a>
+    <a href="javascript:void(0);" class="toggle">Number</a>
+    <a href="javascript:void(0);" class="toggle">Types</a>
+    <a href="javascript:void(0);" class="toggle">Image</a>
+    <a href="javascript:void(0);" class="toggle">Actions</a>
   </div>
-  <div id="search_box">
-    Search <input type="text" id="search">
+  <div id="search">
+    <div class="searchbar">
+      Search by type  <input style="font-size:20px;" type="text" id="typesearch">
+    </div>
+    <div class="searchbar">
+      Search by number  <input style="font-size:20px;" type="text" id="numbersearch">
+    </div>
+    <div class="searchbar">
+      Search by name  <input style="font-size:20px;" type="text" id="namesearch">
+    </div>
   </div>
   <table>
     <thead>
@@ -33,13 +42,11 @@
   <div id="pages">
     <a id="first" class="paginate_button">First</a>
     <a id="previous" class="paginate_button">Previous</a>
-    <span>
-      <a class="paginate_button nums button-border">1</a>
-      <a class="paginate_button nums">2</a>
-      <a class="paginate_button nums">3</a>
-      <a class="paginate_button nums">4</a>
-      <a class="paginate_button nums">5</a>
-    </span>
+    <a class="paginate_button nums button-border">1</a>
+    <a class="paginate_button nums">2</a>
+    <a class="paginate_button nums">3</a>
+    <a class="paginate_button nums">4</a>
+    <a class="paginate_button nums">5</a>
     <a id="next" class="paginate_button">Next</a>
     <a id="last" class="paginate_button">Last</a>
   </div>
