@@ -85,6 +85,7 @@ const addRow = (row) => {
 };
 
 const populatePage = (page) => {
+  console.log('populating page', page)
   const pageToRows = {
     1: 0,
     2: 10,
@@ -116,62 +117,191 @@ const clearTable = () => {
     tableBody.removeChild(tableBody.firstChild);
   }
 };
+let currentPage = 1;
+
+const rotatePages = (pageButtons, currentPage, direction) => {
+  pageButtons.forEach(button => {
+    if (button.classList.contains('button-border')) {
+      button.classList.remove('button-border');
+    }
+  });
+  if (direction === 'down') {
+    pageButtons[0].innerHTML = currentPage - 4;
+    pageButtons[1].innerHTML = currentPage - 3;
+    pageButtons[2].innerHTML = currentPage - 2;
+    pageButtons[3].innerHTML = currentPage - 1;
+    pageButtons[4].innerHTML = currentPage;
+    pageButtons[4].classList.add('button-border');
+  } else {
+    pageButtons[0].innerHTML = currentPage;
+    pageButtons[1].innerHTML = currentPage + 1;
+    pageButtons[2].innerHTML = currentPage + 2;
+    pageButtons[3].innerHTML = currentPage + 3;
+    pageButtons[4].innerHTML = currentPage + 4;
+    pageButtons[0].classList.add('button-border');
+  }
+};
 
 const firstPage = () => {
-  const firstPageElement = document.getElementsByClassName('first');
-  const firstPageButton = firstPageElement[0];
+  const firstPageElement = document.getElementById('first');
+  const pageButtonElements = document.getElementsByClassName('nums');
+  const pageButtons = [...pageButtonElements];
 
-  firstPageButton.addEventListener('click', e => {
+  firstPageElement.addEventListener('click', e => {
+    if (currentPage === 1) {
+      return;
+    }
+    currentPage = 1;
     clearTable();
     populatePage(1);
+    rotatePages(pageButtons, currentPage, 'up')
+  });
+};
+
+const lastPage = () => {
+  const lastPageElement = document.getElementById('last');
+  const pageButtonElements = document.getElementsByClassName('nums');
+  const pageButtons = [...pageButtonElements];
+
+  lastPageElement.addEventListener('click', e => {
+    if (currentPage === 15) {
+      return;
+    }
+    currentPage = 15;
+    clearTable();
+    populatePage(15);
+    rotatePages(pageButtons, currentPage, 'down');
+  });
+};
+
+const previousPage = () => {
+  const previousPageElement = document.getElementById('previous');
+  const pageButtonElements = document.getElementsByClassName('nums');
+  const pageButtons = [...pageButtonElements];
+
+  previousPageElement.addEventListener('click', e => {
+    if (currentPage > 1) {
+      clearTable();
+      populatePage(--currentPage);
+    } else {
+      return;
+    }
+    const currentPageBorder = document.getElementsByClassName('button-border')[0];
+    currentPageBorder.classList.remove('button-border');
+    pageButtons.forEach(button => {
+      if (parseInt(button.innerHTML) === currentPage) {
+        button.classList.add('button-border');
+      }
+    });
+    if (currentPage + 1 === parseInt(pageButtons[0].innerHTML)) {
+      rotatePages(pageButtons, currentPage, 'down');
+    }
+  });
+};
+
+
+const nextPage = () => {
+  const nextPageElement = document.getElementById('next');
+  const pageButtonElements = document.getElementsByClassName('nums');
+  const pageButtons = [...pageButtonElements];
+
+  nextPageElement.addEventListener('click', e => {
+    if (currentPage < 15) {
+      clearTable();
+      populatePage(++currentPage);
+    } else {
+      return;
+    }
+    const currentPageBorder = document.getElementsByClassName('button-border')[0];
+    currentPageBorder.classList.remove('button-border');
+    pageButtons.forEach(button => {
+      if (parseInt(button.innerHTML) === currentPage) {
+        button.classList.add('button-border');
+      }
+    });
+    if (currentPage - 1 === parseInt(pageButtons[4].innerHTML)) {
+      rotatePages(pageButtons, currentPage, 'up');
+    }
+  });
+};
+
+const choosePage = () => {
+  const pageButtonElements = document.getElementsByClassName('nums');
+  const pageButtons = [...pageButtonElements];
+
+  pageButtons.forEach((button, i) => {
+    button.addEventListener('click', e => {
+      currentPage = e.target.innerHTML;
+      const currentPageBorder = document.getElementsByClassName('button-border')[0];
+      currentPageBorder.classList.remove('button-border');
+      button.classList.add('button-border');
+      console.log('currentPage', currentPage)
+      clearTable();
+      populatePage(currentPage);
+    });
   });
 };
 
 firstPage();
-
-const lastPage = () => {
-  const lastPageElement = document.getElementsByClassName('last');
-  const lastPageButton = lastPageElement[0];
-
-  lastPageButton.addEventListener('click', e => {
-    clearTable();
-    populatePage(15);
-  });
-};
-let currentPage = 1;
-const previousPage = () => {
-  const previousPageElement = document.getElementsByClassName('previous');
-  const previousPageButton = previousPageElement[0];
-  const currentPageBorder = document.getElementsByClassName('button-border')[0];
-  // currentPageBorder.classList.remove()
-  previousPageButton.addEventListener('click', e => {
-    if (currentPage > 1) {
-      currentPage--;
-    } else {
-      return;
-    }
-    clearTable();
-    populatePage(currentPage);
-  });
-};
 previousPage();
-
-const nextPage = () => {
-
-};
-
 nextPage();
 lastPage();
+choosePage();
 
-const switchPages = () => {
-  const pageButtonElements = document.getElementsByClassName('paginate_button');
-  const pageButtons = [...pageButtonElements];
-  pageButtons.forEach(button => {
+
+const addSortButtons = () => {
+  const sortButton = new Image(12, 12);
+
+  sortButton.classList.add('sort');
+  sortButton.src = sortButtonUrl;
+  const sortButton2 = sortButton.cloneNode();
+  const sortButton3 = sortButton.cloneNode();
+
+  sortButton.classList.add('name', 'sort');
+  sortButton2.classList.add('number', 'sort');
+  sortButton3.classList.add('type', 'sort');
+  const headers = document.getElementsByTagName('th');
+
+  headers[0].appendChild(sortButton);
+  headers[1].appendChild(sortButton2);
+  headers[2].appendChild(sortButton3);
+};
+
+addSortButtons();
+
+//sort the pokemon dataset based off column name
+const sortColumn = (column) => {
+  // const sortedPokemonData = pokemonData.sort((a, b) => {
+  //   return a[column] < b[column] ? -1 : a[column] > b[column] ? 1 : 0;
+  // });
+
+  // return sortedPokemonData;
+  const sortButtonElements = document.getElementsByClassName('sort');
+  const sortButtons = [...sortButtonElements];
+
+  sortButtons.forEach(button => {
     button.addEventListener('click', e => {
+      const columnToSort = el.classList[1];
+      // let sortedPokemonData = sortColumn(columnToSort);
+      let sortedPokemonData = pokemonData.sort((a, b) => {
+        return a[column] < b[column] ? -1 : a[column] > b[column] ? 1 : 0;
+      });
+      clearTable();
+      console.log('clicked', el.classList)
 
+      if (button.classList.contains('sorted')) {
+        sortedPokemonData = sortedPokemonData.reverse();
+        button.classList.remove('sorted');
+        console.log('after sorted', button.classList)
+      } else {
+        button.classList.add('sorted');
+      }
+      console.log('current page inside sort', currentPage)
+      addRows(currentPage);
     });
   });
 };
+
 // const addEditing = () => {
 //   const actionElements = document.getElementsByClassName('action');
 //     [...actionElements].forEach(action => {
@@ -225,28 +355,7 @@ const switchPages = () => {
 //   })
 // }
 
-// const addSortButtons = () => {
-//   const sortButton = new Image(12, 12);
-//   sortButton.classList.add('sort');
-//   sortButton.src = sortButtonUrl;
-//   const sortButton2 = sortButton.cloneNode();
-//   const sortButton3 = sortButton.cloneNode();
-//   sortButton.classList.add('name');
-//   sortButton2.classList.add('number');
-//   sortButton3.classList.add('type');
 
-//   const nameHeader = document.getElementById('name');
-//   const numberHeader = document.getElementById('number');
-//   const typeHeader = document.getElementById('type(s)');
-
-//   nameHeader.appendChild(sortButton);
-
-//   numberHeader.appendChild(sortButton2);
-
-//   typeHeader.appendChild(sortButton3);
-// }
-
-// addSortButtons();
 
 
 
@@ -333,37 +442,9 @@ const switchPages = () => {
 
 // addRows(pokemonData, 0, 9);
 
-// //sort the pokemon dataset based off column name
-// const sortTable = (column) => {
-//   const sortedPokemonData = pokemonData.sort((a, b) => {
-//     return a[column] < b[column] ? -1 : a[column] > b[column] ? 1 : 0;
-//   });
 
-//   return sortedPokemonData;
-// };
 
-// const sortIcons = document.getElementsByClassName('sort');
 
-// const elements = [...sortIcons];
-
-// elements.forEach(el => {
-//   el.addEventListener('click', e => {
-//     const columnToSort = el.classList[1];
-//     let sortedPokemonData = sortTable(columnToSort);
-//     clearTable();
-//     console.log('clicked', el.classList)
-
-//     if (el.classList.contains('sorted')) {
-//       sortedPokemonData = sortedPokemonData.reverse();
-//       el.classList.remove('sorted');
-//       console.log('after sorted', el.classList)
-//     } else {
-//       el.classList.add('sorted');
-//     }
-//     console.log('current page inside sort', currentPage)
-//     addRows(currentPage);
-//   });
-// });
 
 // const toggleElements = document.getElementsByClassName('toggle_button');
 // const columnHeaders = document.getElementsByClassName('column_header');
