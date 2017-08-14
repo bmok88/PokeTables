@@ -6,6 +6,8 @@ const pokemonData = require('./practice.js');
 const editImage = 'https://www.iconexperience.com/_img/i_collection_png/256x256/plain/pencil.png';
 const deleteImage = 'https://image.freepik.com/free-icon/x-circle_318-2105.jpg';
 const tableBody = document.getElementById('pokebody');
+
+
 //Get request that returns array of all 150 pokemon url's
 
 // const getAllPokemon = () => {
@@ -136,7 +138,29 @@ const lastPage = () => {
     populatePage(15);
   });
 };
+let currentPage = 1;
+const previousPage = () => {
+  const previousPageElement = document.getElementsByClassName('previous');
+  const previousPageButton = previousPageElement[0];
+  const currentPageBorder = document.getElementsByClassName('button-border')[0];
+  // currentPageBorder.classList.remove()
+  previousPageButton.addEventListener('click', e => {
+    if (currentPage > 1) {
+      currentPage--;
+    } else {
+      return;
+    }
+    clearTable();
+    populatePage(currentPage);
+  });
+};
+previousPage();
 
+const nextPage = () => {
+
+};
+
+nextPage();
 lastPage();
 
 const switchPages = () => {

@@ -3,3 +3,4 @@ client/public/bundle.js
 yarn.lock
 npm-debug.log
 node_modules/
+src/practice.js
