@@ -1,20 +1,23 @@
 import React from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
 
 import PokeRow from './PokeRow';
 
-const PokeBody = ({ pokemon }) => {
+class PokeBody extends React.Component {
+  componentDidMount() {
+    console.log(this.props, 'pokemon')
+  }
 
-  const pokeArray = [...pokemon];
-
-  return (
-    <PokeRow />
-  );
-
-    // {pokemon.map => (p => {
-    //   <PokeRow pokemon={p}/>
-    // })
-    // }
-
+  render() {
+    return (
+      <PokeRow />
+    );
+  }
 };
 
-export default PokeBody;
+const mapStateToProps = state => {
+  return state;
+};
+
+export default connect(mapStateToProps)(PokeBody);

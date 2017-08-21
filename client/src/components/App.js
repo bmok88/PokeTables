@@ -7,13 +7,11 @@ import PokeTable from './PokeTable';
 import { getAllPokemon } from '../actions/index';
 
 class App extends React.Component {
-  componentWillMount() {
-    axios.get(this.props.pokeAPI + '/?limit=811')
-      .then(results => {
-
-        console.log('resultssds', results.data.results);
-        this.props.dispatch(getAllPokemon(results.data.results));
-      });
+  componentDidMount() {
+    // axios.get(this.props.pokeAPI + '/?limit=811')
+    //   .then(results => {
+    //     this.props.dispatch(getAllPokemon(results.data.results));
+    //   });
   }
   render() {
     return (
