@@ -1,5 +1,4 @@
 import App from './components/App';
-import PokemonData from './pokemonData';
 
 import React from 'react';
 import { render } from 'react-dom';
@@ -12,4 +11,5 @@ import { Provider } from 'react-redux';
 //   </Provider>,
 //   document.getElementById('app')
 // );
+
 render(<App pokemon={PokemonData}/>, document.getElementById('app'));

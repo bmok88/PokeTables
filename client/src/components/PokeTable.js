@@ -1,5 +1,6 @@
 import React from 'react';
 
+import PokeBody from './PokeBody';
 import PokeHeaders from '../containers/PokeHeaders';
 
 const PokeTable = ({ pokemon }) => (
@@ -8,7 +9,7 @@ const PokeTable = ({ pokemon }) => (
       <PokeHeaders />
     </thead>
     <tbody>
-      <PokeBody />
+      <PokeBody pokemon={pokemon.pokemon}/>
     </tbody>
   </table>
 );

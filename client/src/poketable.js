@@ -1,6 +1,5 @@
 // "use strict";
 
-// // const pokeAPI = 'http://pokeapi.co/api/v2/pokemon/';
 // const sortButtonUrl = "https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg";
 // const pokemonData = require('./pokemonData.js');
 // const editImage = 'https://www.iconexperience.com/_img/i_collection_png/256x256/plain/pencil.png';
