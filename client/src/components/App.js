@@ -1,8 +1,10 @@
 import React from 'react';
+import AddPokemon from '../containers/AddPokemon';
 
 const App = () => (
   <div>
-    React-Redux Pokemon
+    <h1>React-Redux PokéTable</h1>
+    <AddPokemon />
   </div>
 );
 
