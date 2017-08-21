@@ -10,7 +10,22 @@ module.exports = {
     path: BUILD_DIR,
     filename: 'bundle.js'
   },
-
+  module: {
+    loaders: [
+      {
+        test: /\.scss$/,
+        use: cssConfig
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015', 'react']
+        }
+      }
+    ]
+  },
   devServer: {
     contentBase: path.join(__dirname, 'client/public'),
     compress: true,
