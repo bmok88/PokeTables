@@ -6,14 +6,14 @@ import PokeRow from './PokeRow';
 import { addPokemon } from '../actions/index';
 
 class PokeBody extends React.Component {
-  componentDidMount() {
-    // console.log(this.props.dispatch(addPokemon()), 'pokemon')
-  }
 
   render() {
-    return (
-      <PokeRow />
-    );
+    for (let i = 1; i < window.localStorage.length; i++) {
+      let pokemon = JSON.parse(window.localStorage[i]);
+      return (
+        <PokeRow {...pokemon} />
+      );
+    }
   }
 };
 

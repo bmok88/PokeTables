@@ -1,12 +1,14 @@
 import React from 'react';
 
-const PokeRow = ({ pokemon }) => {
+const PokeRow = ({ name, id, height, weight, sprites, types }) => {
+  console.log(types[0].type.name, types[1].type.name)
   return (
     <tr>
-      <td>pokemon.name</td>
-      <td>pokemon.number</td>
-      <td>pokemon.types</td>
-      <td>pokemon.imageUrl</td>
+      <td>{name}</td>
+      <td>{id}</td>
+
+      <td>{height}</td>
+      <td>{weight}</td>
     </tr>
   );
 };
