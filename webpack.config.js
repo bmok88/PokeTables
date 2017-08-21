@@ -5,7 +5,7 @@ var APP_DIR = path.resolve(__dirname, 'client/src');
 var BUILD_DIR = path.resolve(__dirname, 'client/public');
 
 module.exports = {
-  entry: APP_DIR + '/poketable.js',
+  entry: APP_DIR + '/index.js',
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js'
