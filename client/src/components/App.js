@@ -1,15 +1,18 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import AddPokemon from '../containers/AddPokemon';
 import PokeTable from './PokeTable';
-const pokeAPI = 'http://pokeapi.co/api/v2/pokemon/?limit=811';
+import { getAllPokemon } from '../actions/index';
 
 class App extends React.Component {
   componentWillMount() {
-    axios.get(pokeAPI)
+    axios.get(this.props.pokeAPI + '/?limit=811')
       .then(results => {
-        console.log('resultssds', results.data.results[0]);
+
+        console.log('resultssds', results.data.results);
+        this.props.dispatch(getAllPokemon(results.data.results));
       });
   }
   render() {
@@ -17,10 +20,14 @@ class App extends React.Component {
       <div>
         <h1>React-Redux PokéTable</h1>
         <AddPokemon class="add"/>
-        <PokeTable pokemon={this.props}/>
+        <PokeTable pokemon={this.props.pokemon} pokeAPI={this.props.pokeAPI}/>
       </div>
     );
   }
 };
 
-export default App;
+const mapStateToProps = state => {
+  return state;
+};
+
+export default connect(mapStateToProps)(App);

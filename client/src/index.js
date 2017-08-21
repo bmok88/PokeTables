@@ -9,6 +9,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
 
+const pokeAPI = 'http://pokeapi.co/api/v2/pokemon';
 // ReactDOM.render(
 //   <Provider store={createStore(todoApp)}>
 //     <App />
@@ -24,7 +25,7 @@ const store = createStore(
 
 render(
   <Provider store={store}>
-    <App pokemon={PokemonData}/>
+    <App pokemon={PokemonData} pokeAPI={pokeAPI}/>
   </Provider>,
   document.getElementById('app')
 );
