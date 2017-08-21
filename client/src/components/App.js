@@ -1,10 +1,13 @@
 import React from 'react';
-import AddPokemon from '../containers/AddPokemon';
 
-const App = () => (
+import AddPokemon from '../containers/AddPokemon';
+import PokeTable from './PokeTable';
+
+const App = (pokemon) => (
   <div>
     <h1>React-Redux PokéTable</h1>
-    <AddPokemon />
+    <AddPokemon class="add"/>
+    <PokeTable pokemon={pokemon}/>
   </div>
 );
 
