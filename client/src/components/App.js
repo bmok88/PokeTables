@@ -9,7 +9,7 @@ class App extends React.Component {
   componentWillMount() {
     axios.get(pokeAPI)
       .then(results => {
-        console.log('results', results);
+        console.log('resultssds', results.data.results[0]);
       });
   }
   render() {
