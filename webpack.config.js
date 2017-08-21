@@ -12,10 +12,10 @@ module.exports = {
   },
   module: {
     loaders: [
-      {
-        test: /\.scss$/,
-        use: cssConfig
-      },
+      // {
+      //   test: /\.scss$/,
+      //   use: cssConfig
+      // },
       {
         test: /\.js$/,
         exclude: /node_modules/,
