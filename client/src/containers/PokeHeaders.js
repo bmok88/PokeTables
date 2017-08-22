@@ -18,17 +18,16 @@ class PokeHeaders extends React.Component {
   render() {
     return (
       <tr>
-        <th>Number</th>
-        <th>Name</th>
-        <th>Height (m)</th>
-        <th>Weight (kg)</th>
-        <th>Types</th>
-        <th>Image</th>
+        <th>Number<img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img></th>
+        <th>Name<img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img></th>
+        <th>Height (m)<img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img></th>
+        <th>Weight (kg)<img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img></th>
+        <th>Types<img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img></th>
+        <th>Sprite</th>
       </tr>
     );
   }
-};
-
+}
 
 const mapDispatchToProps = dispatch => {
   return dispatch;
