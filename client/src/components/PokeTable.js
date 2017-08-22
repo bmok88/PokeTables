@@ -9,9 +9,9 @@ const PokeTable = () => (
     <thead>
       <PokeHeaders />
     </thead>
-    <tbody>
+
       <PokeBody />
-    </tbody>
+
   </table>
 );
 
