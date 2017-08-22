@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { getAllPokemon } from '../actions/index';
+import { getAllPokemon, sortColumn } from '../actions/index';
 
 class PokeHeaders extends React.Component {
   componentDidMount() {
@@ -18,11 +18,35 @@ class PokeHeaders extends React.Component {
   render() {
     return (
       <tr>
-        <th>Number<img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img></th>
-        <th>Name<img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img></th>
-        <th>Height (m)<img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img></th>
-        <th>Weight (kg)<img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img></th>
-        <th>Types<img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img></th>
+        <th>Number
+          <a href="#"
+             onClick={e => {
+               e.preventDefault();
+               this.props.dispatch(sortColumn('id'));
+             }}
+          >
+            <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
+          </a>
+        </th>
+        <th>Name
+          <a href="#"
+             onClick={e => {
+               e.preventDefault();
+               this.props.dispatch(sortColumn('name'));
+             }}
+          >
+          <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
+          </a>
+        </th>
+        <th>Height (m)
+          <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
+        </th>
+        <th>Weight (kg)
+          <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
+        </th>
+        <th>Types
+          <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
+        </th>
         <th>Sprite</th>
       </tr>
     );
@@ -33,4 +57,10 @@ const mapDispatchToProps = dispatch => {
   return dispatch;
 };
 
-export default connect(mapDispatchToProps)(PokeHeaders);
+const mapStateToProps = state => {
+  return state;
+};
+
+export default connect(
+  mapStateToProps
+)(PokeHeaders);

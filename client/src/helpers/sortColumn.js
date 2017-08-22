@@ -1,5 +1,6 @@
 export const sortColumn = (state, column) => {
-  const sortedState = state.sort((a, b) => {
+  console.log('inside sort function', state, column)
+  const sortedState = state.slice().sort((a, b) => {
     return a[column] < b[column] ? -1 : a[column] > b[column] ? 1 : 0;
   });
 

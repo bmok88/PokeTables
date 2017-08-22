@@ -1,3 +1,5 @@
+import { sortColumn } from '../helpers/sortColumn';
+
 const eachPokemon = (state, action) => {
   switch (action.type) {
     case 'ADD_POKEMON':
@@ -33,6 +35,8 @@ const pokemon = (state = [], action) => {
       return state.filter(p => eachPokemon(p, action));
     case 'GET_ALL':
       return action.pokemon;
+    case 'SORT_POKEMON':
+      return sortColumn(state, action.column);
     default:
       return state;
   }
