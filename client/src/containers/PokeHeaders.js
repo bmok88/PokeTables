@@ -23,6 +23,7 @@ class PokeHeaders extends React.Component {
              onClick={e => {
                e.preventDefault();
                this.props.dispatch(sortColumn('id'));
+               // this.props.dispatch(sortDirection('ASCENDING'));
              }}
           >
             <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>

@@ -15,6 +15,7 @@ const pokeAPI = 'http://pokeapi.co/api/v2/pokemon';
 //   </Provider>,
 //   document.getElementById('app')
 // );
+
 const store = createStore(
   pokeTable,
   compose(

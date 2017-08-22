@@ -22,7 +22,7 @@ const eachPokemon = (state, action) => {
     default:
       return state;
   }
-}
+};
 
 const pokemon = (state = [], action) => {
   switch (action.type) {
@@ -35,8 +35,6 @@ const pokemon = (state = [], action) => {
       return state.filter(p => eachPokemon(p, action));
     case 'GET_ALL':
       return action.pokemon;
-    case 'SORT_POKEMON':
-      return sortColumn(state, action.column);
     default:
       return state;
   }

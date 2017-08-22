@@ -12,3 +12,8 @@ export const sortColumn = (column) => ({
   type: 'SORT_POKEMON',
   column
 });
+
+// export const sortColumn = (direction) => ({
+//   type: direction,
+//   direction
+// });
