@@ -39,13 +39,34 @@ class PokeHeaders extends React.Component {
           </a>
         </th>
         <th>Height (m)
+          <a href="#"
+             onClick={e => {
+               e.preventDefault();
+               this.props.dispatch(sortColumn('height'));
+             }}
+          >
           <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
+          </a>
         </th>
         <th>Weight (kg)
+          <a href="#"
+             onClick={e => {
+               e.preventDefault();
+               this.props.dispatch(sortColumn('weight'));
+             }}
+          >
           <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
+          </a>
         </th>
         <th>Types
+               <a href="#"
+             onClick={e => {
+               e.preventDefault();
+               this.props.dispatch(sortColumn('types'));
+             }}
+          >
           <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
+          </a>
         </th>
         <th>Sprite</th>
       </tr>
