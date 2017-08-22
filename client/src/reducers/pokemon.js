@@ -1,21 +1,17 @@
 const eachPokemon = (state, action) => {
   switch (action.type) {
     case 'ADD_POKEMON':
-      let types;
       let pokemon = action.pokemon;
-
-      if (pokemon.types.length > 1) {
-        types = pokemon.types[0].name + ', ' + pokemon.types[1].name;
-      } else {
-        types = pokemon.types[0].name;
-      }
+      let typeOne = pokemon.types[0].type.name[0].toUpperCase() + pokemon.types[0].type.name.slice(1);
+      let typeTwo = pokemon.types[1] ? pokemon.types[1].type.name[0].toUpperCase() + pokemon.types[1].type.name.slice(1) : null;
 
       return {
-        name: pokemon.name,
         id: pokemon.id,
+        name: pokemon.name,
         height: pokemon.height,
         weight: pokemon.weight,
-        types: types
+        types: typeTwo ? typeOne + '/' + typeTwo : typeOne,
+        sprite: pokemon.sprites.front_default
       };
     case 'DELETE_POKEMON':
       if (state.id !== action.id) {

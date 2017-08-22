@@ -1,5 +1,4 @@
 import App from './components/App';
-import PokemonData from './pokemonData';
 import pokeTable from './reducers/root';
 
 import React from 'react';
@@ -25,7 +24,7 @@ const store = createStore(
 
 render(
   <Provider store={store}>
-    <App pokemon={PokemonData} pokeAPI={pokeAPI}/>
+    <App pokeAPI={pokeAPI}/>
   </Provider>,
   document.getElementById('app')
 );

@@ -1,6 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-export default class PokeHeaders extends React.Component {
+import { getAllPokemon } from '../actions/index';
+
+class PokeHeaders extends React.Component {
+  componentDidMount() {
+    let rows = [];
+
+    for (let i = 1; i < window.localStorage.length; i++) {
+      let pokemon = JSON.parse(window.localStorage[i]);
+
+      rows.push(pokemon);
+    }
+    this.props.dispatch(getAllPokemon(rows));
+  }
+
   render() {
     return (
       <tr>
@@ -14,3 +28,10 @@ export default class PokeHeaders extends React.Component {
     );
   }
 };
+
+
+const mapDispatchToProps = dispatch => {
+  return dispatch;
+};
+
+export default connect(mapDispatchToProps)(PokeHeaders);
