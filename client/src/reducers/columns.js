@@ -1,16 +1,15 @@
-const columns = (state = {hiding: [], sorting: 'none'}, action) => {
-  switch (action.type) {
-    case 'SORT_POKEMON':
-      let sortedState = sortColumn(state, action.column);
+// import { sortColumn } from '../helpers/sortColumn';
 
-      if (state.sortDirection === 'ASCENDING') {
-        return sortedState.reverse();
-      }
+// const columns = (state = {hiding: [], sorting: 'none'}, action) => {
+//   switch (action.type) {
+//     case 'SORT_COLUMN':
+//     console.log('state', state)
+//       let sortedState = sortColumn(action.pokemon, action.column);
 
-      return sortedState;
-    default:
-      return state;
-  }
-};
+//       return sortedState;
+//     default:
+//       return state;
+//   }
+// };
 
-export default columns;
+// export default columns;

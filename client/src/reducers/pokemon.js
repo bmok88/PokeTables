@@ -24,6 +24,20 @@ const eachPokemon = (state, action) => {
   }
 };
 
+const columns = (state, action) => {
+  switch (action.type) {
+    case 'SORT_COLUMN':
+    console.log('state', state)
+      let sortedState = sortColumn(state, action.column);
+      if (state.column === action.column) {
+        return sortedState.reverse();
+      }
+      return sortedState;
+    default:
+      return state;
+  }
+};
+
 const pokemon = (state = [], action) => {
   switch (action.type) {
     case 'ADD_POKEMON':
@@ -31,6 +45,8 @@ const pokemon = (state = [], action) => {
         ...state,
         eachPokemon(undefined, action)
       ];
+    case 'SORT_COLUMN':
+      return columns(state, action);
     case 'DELETE_POKEMON':
       return state.filter(p => eachPokemon(p, action));
     case 'GET_ALL':

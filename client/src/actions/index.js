@@ -9,11 +9,7 @@ export const addPokemon = (pokemon) => ({
 });
 
 export const sortColumn = (column) => ({
-  type: 'SORT_POKEMON',
+  type: 'SORT_COLUMN',
   column
 });
 
-// export const sortColumn = (direction) => ({
-//   type: direction,
-//   direction
-// });
