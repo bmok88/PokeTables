@@ -6,8 +6,8 @@ import PokeRow from './PokeRow';
 const PokeBody = ({ pokemon }) => {
   return (
     <tbody>
-      {pokemon.map(p => {
-        return <PokeRow key={p.id} {...p} />;
+      {pokemon.map((p, i) => {
+          return <PokeRow key={p.id} {...p} />;
       })}
     </tbody>
   );
