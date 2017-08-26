@@ -14,7 +14,7 @@ const page = (state = 1, action) => {
       } else {
         page = action.choosePage;
       }
-      console.log('page choosing num', page, action.choosePage)
+
       return page;
     default:
       return state;
