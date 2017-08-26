@@ -18,7 +18,6 @@ class PokeHeaders extends React.Component {
 
   render() {
     const { dispatch, pokemon, columnToSort } = this.props;
-    console.log('pokeheaders props', this.props)
     return (
       <tr>
         <th>Number
@@ -41,23 +40,21 @@ class PokeHeaders extends React.Component {
           <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
           </a>
         </th>
-        <th>Height (m)
+        <th>Height(m)
           <a href="#"
              onClick={e => {
                e.preventDefault();
                dispatch(chooseSortColumn('height'));
-
              }}
           >
           <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
           </a>
         </th>
-        <th>Weight (kg)
+        <th>Weight(kg)
           <a href="#"
              onClick={e => {
                e.preventDefault();
                dispatch(chooseSortColumn('weight'));
-
              }}
           >
           <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
@@ -68,7 +65,6 @@ class PokeHeaders extends React.Component {
              onClick={e => {
                e.preventDefault();
                dispatch(chooseSortColumn('types'));
-
              }}
           >
           <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>

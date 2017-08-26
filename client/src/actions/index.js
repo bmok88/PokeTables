@@ -17,3 +17,8 @@ export const sortColumn = (column) => ({
   type: 'SORT_COLUMN',
   column
 });
+
+export const choosePage = (page) => ({
+  type: 'CHOOSE_PAGE',
+  page
+});

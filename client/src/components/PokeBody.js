@@ -5,7 +5,6 @@ import PokeRow from './PokeRow';
 import { sortColumn } from '../helpers/sortColumn';
 
 const getSortedPokemon = (pokemon, column) => {
-
   return sortColumn(pokemon, column);
 };
 
