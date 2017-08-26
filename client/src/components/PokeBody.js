@@ -8,18 +8,19 @@ const getSortedPokemon = (pokemon, column) => {
   return sortColumn(pokemon, column);
 };
 
-const getPage = (pokemon, page) => {
-  if (page === 'default') {
-    return pokemon.slice(0, 10);
+const getPage = (pokemon, pageToGoTo) => {
+  if (pageToGoTo === 'one') {
+    pageToGoTo = 1;
   }
-  const lastRow = (pokemon.length / 15) * page;
+
+  let lastRow = (pokemon.length / 15) * pageToGoTo;
 
   return pokemon.slice(lastRow - 10, lastRow);
 };
 
-const PokeBody = (props) => {
-  const sortedPokemon = getSortedPokemon(props.pokemon, props.columnToSort);
-  const whichPage = getPage(sortedPokemon, props.page);
+const PokeBody = ({ pokemon, columnToSort, currentPage }) => {
+  const sortedPokemon = getSortedPokemon(pokemon, columnToSort);
+  const whichPage = getPage(sortedPokemon, currentPage);
 
   return (
     <tbody>

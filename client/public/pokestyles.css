@@ -25,18 +25,26 @@ a {
   padding: 20px 15px;
   font-size: 30px;
 }
-/*table {
-  width: 100%;
-  padding: 50px 0;
-}*/
 
+a.button-border {
+  font-weight: bold;
+}
 
 /*table {
   border-collapse: collapse;
   width: 100%;
   border: 1px solid #ddd;
   font-size: 18px;
+  height: 100%;
+}*/
+
+/*table {
+  width: 100%;
+  padding: 50px 0;
 }
+
+
+
 
 
 #headers_row {

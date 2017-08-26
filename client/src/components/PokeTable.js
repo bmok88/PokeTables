@@ -12,5 +12,4 @@ const PokeTable = () => (
   </table>
 );
 
-
 export default PokeTable;

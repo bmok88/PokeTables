@@ -18,7 +18,8 @@ export const sortColumn = (column) => ({
   column
 });
 
-export const choosePage = (page) => ({
+export const choosePage = (choosePage, currentPage) => ({
   type: 'CHOOSE_PAGE',
-  page
+  choosePage,
+  currentPage
 });

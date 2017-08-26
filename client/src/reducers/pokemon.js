@@ -24,15 +24,6 @@ const eachPokemon = (state, action) => {
   }
 };
 
-// const columns = (state, action) => {
-//   switch (action.type) {
-//     case 'SORT_COLUMN':
-
-//     default:
-//       return state;
-//   }
-// };
-
 const pokemon = (state = [], action) => {
   switch (action.type) {
     case 'ADD_POKEMON':
@@ -41,8 +32,7 @@ const pokemon = (state = [], action) => {
         eachPokemon(undefined, action)
       ];
     case 'SORT_COLUMN':
-    console.log('columns state', state, action)
-    let sortedState = sortColumn(state, action.column);
+      let sortedState = sortColumn(state, action.column);
 
       if (state.column === action.column) {
         sortedState = sortedState.reverse();
