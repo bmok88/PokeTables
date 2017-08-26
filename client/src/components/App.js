@@ -4,11 +4,11 @@ import axios from 'axios';
 import AddPokemon from '../containers/AddPokemon';
 import PokeTable from './PokeTable';
 
-const App = ({ pokeAPI }) => {
+const App = () => {
 
   //Self-invoking function to fetch data from pokemonAPI...acts like componentDidMount()
   // (() => {
-  //   axios.get(pokeAPI + '?limit=150')
+  //   axios.get(this.props.pokeAPI + '?limit=150')
   //     .then(results => {
   //       const pokemonList = results.data.results;
 

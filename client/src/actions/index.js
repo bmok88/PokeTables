@@ -8,8 +8,12 @@ export const addPokemon = (pokemon) => ({
   pokemon
 });
 
+export const chooseSortColumn = (column) => ({
+  type: 'CHOOSE_SORTCOLUMN',
+  column
+});
+
 export const sortColumn = (column) => ({
   type: 'SORT_COLUMN',
   column
 });
-

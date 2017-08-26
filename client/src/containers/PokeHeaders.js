@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { getAllPokemon, sortColumn } from '../actions/index';
+import { getAllPokemon, chooseSortColumn } from '../actions/index';
 
 class PokeHeaders extends React.Component {
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { dispatch, columnToSort } = this.props;
     let rows = [];
 
     for (let i = 1; i < window.localStorage.length; i++) {
@@ -17,7 +17,7 @@ class PokeHeaders extends React.Component {
   }
 
   render() {
-    const { dispatch, pokemon } = this.props;
+    const { dispatch, pokemon, columnToSort } = this.props;
     console.log('pokeheaders props', this.props)
     return (
       <tr>
@@ -25,8 +25,7 @@ class PokeHeaders extends React.Component {
           <a href="#"
              onClick={e => {
                e.preventDefault();
-               dispatch(sortColumn('id', pokemon));
-               // this.props.dispatch(sortDirection('ASCENDING'));
+               dispatch(chooseSortColumn('id'));
              }}
           >
             <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
@@ -36,7 +35,7 @@ class PokeHeaders extends React.Component {
           <a href="#"
              onClick={e => {
                e.preventDefault();
-               dispatch(sortColumn('name', pokemon));
+               dispatch(chooseSortColumn('name'));
              }}
           >
           <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
@@ -46,7 +45,8 @@ class PokeHeaders extends React.Component {
           <a href="#"
              onClick={e => {
                e.preventDefault();
-               dispatch(sortColumn('height', pokemon));
+               dispatch(chooseSortColumn('height'));
+
              }}
           >
           <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
@@ -56,7 +56,8 @@ class PokeHeaders extends React.Component {
           <a href="#"
              onClick={e => {
                e.preventDefault();
-               dispatch(sortColumn('weight', pokemon));
+               dispatch(chooseSortColumn('weight'));
+
              }}
           >
           <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
@@ -66,7 +67,8 @@ class PokeHeaders extends React.Component {
                <a href="#"
              onClick={e => {
                e.preventDefault();
-               dispatch(sortColumn('types', pokemon));
+               dispatch(chooseSortColumn('types'));
+
              }}
           >
           <img src="https://image.freepik.com/free-icon/sort-arrows-couple-pointing-up-and-down_318-42272.jpg" height="20" width="20"></img>
