@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 
-import AddPokemon from '../containers/AddPokemon';
 import PokeTable from './PokeTable';
+import Footer from '../containers/Footer';
+import AddPokemon from '../containers/AddPokemon';
 
 const App = () => {
 
@@ -36,6 +37,7 @@ const App = () => {
       <h1>React-Redux PokéTable</h1>
       <AddPokemon />
       <PokeTable />
+      <Footer />
     </div>
   );
 };

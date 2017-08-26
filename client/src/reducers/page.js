@@ -1,4 +1,4 @@
-const page = (state = 'one', action) => {
+const page = (state = 'default', action) => {
   switch (action.type) {
     case 'CHOOSE_PAGE':
       return action.page;
