@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PokeRow = ({ name, id, height, weight, sprites, types, columnToHide }) => {
+const PokeRow = ({ name, id, height, weight, sprites, types }) => {
   let imageUrl = sprites.front_default;
   let typeOne = types[0].type.name[0].toUpperCase() + types[0].type.name.slice(1);
   let typeTwo = types[1] ? types[1].type.name[0].toUpperCase() + types[1].type.name.slice(1) : null;

@@ -38,13 +38,12 @@ class PokeHeaders extends React.Component {
     const { dispatch, pokemon, columnToSort } = this.props;
     return (
       <tr>
-        <th onClick={e => {
-              this.handleHeaderClick(e, 'number')}
-            }
+        <th onClick={e => this.handleHeaderClick(e, 'number')}
         >Number
           <a href="#"
              onClick={e => {
                e.preventDefault();
+               e.stopPropagation();
                dispatch(chooseSortColumn('id'));
              }}
           >
@@ -55,6 +54,7 @@ class PokeHeaders extends React.Component {
           <a href="#"
              onClick={e => {
                e.preventDefault();
+               e.stopPropagation();
                dispatch(chooseSortColumn('name'));
              }}
           >
@@ -65,6 +65,7 @@ class PokeHeaders extends React.Component {
           <a href="#"
              onClick={e => {
                e.preventDefault();
+               e.stopPropagation();
                dispatch(chooseSortColumn('height'));
              }}
           >
@@ -75,6 +76,7 @@ class PokeHeaders extends React.Component {
           <a href="#"
              onClick={e => {
                e.preventDefault();
+               e.stopPropagation();
                dispatch(chooseSortColumn('weight'));
              }}
           >
@@ -85,6 +87,7 @@ class PokeHeaders extends React.Component {
                <a href="#"
              onClick={e => {
                e.preventDefault();
+               e.stopPropagation();
                dispatch(chooseSortColumn('types'));
              }}
           >
