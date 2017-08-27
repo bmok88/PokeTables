@@ -19,7 +19,6 @@ const getPage = (pokemon, pageToGoTo) => {
 };
 
 const toggleColumn = (pokemon, columnToHide) => {
-  console.log(columnToHide, 'hiding column')
 
   for (var row in pokemon) {
     delete pokemon[row][columnToHide];
@@ -28,17 +27,27 @@ const toggleColumn = (pokemon, columnToHide) => {
   return pokemon;
 };
 
-const PokeBody = ({ pokemon, columnToSort, currentPage, columnToHide }) => {
+const PokeBody = ({ pokemon, columnToSort, currentPage, columnToHide, search }) => {
   const sortedPokemon = getSortedPokemon(pokemon, columnToSort);
   const whichPage = getPage(sortedPokemon, currentPage);
 
-  return (
-    <tbody>
-      {whichPage.map(p => {
-        return <PokeRow key={p.id} {...p} columnToHide={columnToHide}/>;
-      })}
-    </tbody>
-  );
+  if (!search.length) {
+    return (
+      <tbody>
+        {whichPage.map(p => {
+          return <PokeRow key={p.id} {...p} columnToHide={columnToHide}/>;
+        })}
+      </tbody>
+    );
+  } else {
+    return (
+      <tbody>
+        {search.map(p => {
+          return <PokeRow key={p.id} {...p} columnToHide={columnToHide}/>;
+        })}
+      </tbody>
+    );
+  }
 };
 
 const mapStateToProps = state => {

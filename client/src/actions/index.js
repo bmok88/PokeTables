@@ -28,3 +28,8 @@ export const hideColumn = (column) => ({
   type: 'HIDE_COLUMN',
   column
 });
+
+export const search = (pokemon) => ({
+  type: 'SEARCH_POKEMON',
+  pokemon
+});
