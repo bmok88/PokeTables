@@ -4,6 +4,7 @@ import axios from 'axios';
 import PokeTable from './PokeTable';
 import Footer from '../containers/Footer';
 import AddPokemon from '../containers/AddPokemon';
+import Search from '../containers/Search';
 
 const App = () => {
 
@@ -37,6 +38,7 @@ const App = () => {
       <h1>React-Redux PokéTable</h1>
       <h2>Click on the column name to toggle</h2>
       <AddPokemon />
+      <Search />
       <PokeTable />
       <Footer />
     </div>
