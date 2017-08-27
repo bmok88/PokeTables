@@ -18,14 +18,25 @@ const getPage = (pokemon, pageToGoTo) => {
   return pokemon.slice(lastRow - 10, lastRow);
 };
 
-const PokeBody = ({ pokemon, columnToSort, currentPage }) => {
+const toggleColumn = (pokemon, columnToHide) => {
+  console.log(columnToHide, 'hiding column')
+
+  for (var row in pokemon) {
+    delete pokemon[row][columnToHide];
+  }
+
+  return pokemon;
+};
+
+const PokeBody = ({ pokemon, columnToSort, currentPage, columnToHide }) => {
   const sortedPokemon = getSortedPokemon(pokemon, columnToSort);
   const whichPage = getPage(sortedPokemon, currentPage);
+  // const showColumns = toggleColumn(whichPage, columnToHide);
 
   return (
     <tbody>
       {whichPage.map(p => {
-        return <PokeRow key={p.id} {...p} />;
+        return <PokeRow key={p.id} {...p} columnToHide={columnToHide}/>;
       })}
     </tbody>
   );

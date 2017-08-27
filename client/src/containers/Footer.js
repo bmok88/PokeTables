@@ -34,7 +34,6 @@ class Footer extends React.Component {
 
     return (
       <div>
-        <Page />
         <a href="#"
            onClick={e => this.handlePageClick(e)}
         >

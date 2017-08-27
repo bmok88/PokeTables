@@ -13,9 +13,10 @@ td {
   text-align: center;
   height: 90px;
   font-size: 20px;
+  width: 50px;
 }
 
-h1 {
+h1, h2 {
   text-align: center;
 }
 
@@ -28,6 +29,10 @@ a {
 
 a.button-border {
   font-weight: bold;
+}
+
+.visibility {
+  visibility: hidden;
 }
 
 /*table {

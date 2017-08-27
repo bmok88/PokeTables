@@ -35,6 +35,7 @@ const App = () => {
   return (
     <div>
       <h1>React-Redux PokéTable</h1>
+      <h2>Click on the column name to toggle</h2>
       <AddPokemon />
       <PokeTable />
       <Footer />

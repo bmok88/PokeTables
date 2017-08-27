@@ -23,3 +23,8 @@ export const choosePage = (choosePage, currentPage) => ({
   choosePage,
   currentPage
 });
+
+export const hideColumn = (column) => ({
+  type: 'HIDE_COLUMN',
+  column
+});
