@@ -31,7 +31,6 @@ const toggleColumn = (pokemon, columnToHide) => {
 const PokeBody = ({ pokemon, columnToSort, currentPage, columnToHide }) => {
   const sortedPokemon = getSortedPokemon(pokemon, columnToSort);
   const whichPage = getPage(sortedPokemon, currentPage);
-  // const showColumns = toggleColumn(whichPage, columnToHide);
 
   return (
     <tbody>
